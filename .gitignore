@@ -1,0 +1,23 @@
+# Hugo 默认输出目录
+/public/
+/resources/_gen/
+/assets/jsconfig.json
+hugo_stats.json
+
+# Hugo 缓存目录
+/.hugo_build.lock
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE 和编辑器文件
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# 临时文件
+tmp/
+temp/
