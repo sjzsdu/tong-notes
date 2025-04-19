@@ -4,3 +4,9 @@
 [submodule "themes/doks"]
 	path = themes/doks
 	url = https://github.com/thuliteio/doks
+[submodule "themes/stack"]
+	path = themes/stack
+	url = https://github.com/CaiJimmy/hugo-theme-stack.git
+[submodule "themes/LoveIt"]
+	path = themes/LoveIt
+	url = https://github.com/dillonzq/LoveIt.git

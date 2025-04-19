@@ -1,4 +1,18 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Site'
+baseURL = 'https://doc.wnbgj.com/'
+languageCode = 'zh-cn'
+title = "Tong's notes | 彤笔记"
 theme = 'ananke'
+
+[params]
+  custom_css = []
+  custom_js = []
+  head_custom = "site-scripts.html"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.goldmark.parser]
+    [markup.goldmark.parser.attribute]
+      block = true
+      title = true
