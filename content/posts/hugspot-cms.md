@@ -2,7 +2,7 @@
 title: HubSpot CMS模块技术解析
 date: ""
 lastmod: "2023-05-15" 
-draft: true
+draft: false
 author: 孙巨中
 description: "深入解析HubSpot CMS模块系统的架构设计、实现原理和开发实践，帮助开发者掌握模块开发的核心技术。"
 keywords: ["HubSpot", "CMS", "模块开发", "网站构建", "内容管理系统", "前端开发", "营销技术"]
