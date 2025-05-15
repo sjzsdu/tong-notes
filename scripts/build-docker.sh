@@ -20,7 +20,7 @@ check_status() {
 
 # 检查是否成功获取版本号
 if [ -z "$VERSION" ]; then
-    echo "错误: 无法从 package.json 文件中获取版本号"
+    echo "错误: 无法从 hugo.toml 文件中获取版本号"
     exit 1
 fi
 

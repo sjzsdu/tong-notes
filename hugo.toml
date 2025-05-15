@@ -1,13 +1,21 @@
-baseURL = 'https://doc.wnbgj.com/'
+baseURL = 'http://doc.wnbgj.com/'
 languageCode = 'zh-cn'
-title = "Tong's notes | 彤笔记"
+defaultContentLanguage = 'zh-cn'
+title = 'Tong Notes'
 theme = 'ananke'
 
+# 版本号（用于 Docker 构建）
 [params]
-  version = "1.0.1"
-  custom_css = []
-  custom_js = []
-  head_custom = "site-scripts.html"
+version = "1.0.0"
+
+# 语言设置
+[languages]
+  [languages.zh-cn]
+    languageName = "简体中文"
+    contentDir = "content"
+    weight = 1
+    languageCode = "zh-cn"
+    title = "Tong Notes"
 
 [markup]
   [markup.goldmark]

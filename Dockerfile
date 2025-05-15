@@ -1,17 +1,10 @@
 # 阶段一：构建 Hugo 静态网站
-FROM klakegg/hugo:latest AS builder
-
-# 安装 git（用于子模块操作）
-RUN apk add --no-cache git
+FROM klakegg/hugo:0.111.3-ext AS builder
 
 # 设置工作目录
 WORKDIR /app
 
-# 复制主题文件（如果使用 git submodule）
-COPY .gitmodules .
-RUN if [ -f .gitmodules ]; then git submodule update --init --recursive; fi
-
-# 复制项目文件
+# 复制项目文件（包括主题文件）
 COPY . .
 
 # 构建静态网站
