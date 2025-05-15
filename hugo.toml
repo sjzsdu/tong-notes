@@ -6,7 +6,7 @@ theme = 'stack'
 
 # 版本号（用于 Docker 构建）
 [params]
-version = "1.0.0"
+version = "1.0.2"
 
 # 语言设置
 [languages]
