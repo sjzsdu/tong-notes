@@ -4,7 +4,7 @@ title = "Tong's notes | 彤笔记"
 theme = 'ananke'
 
 [params]
-  version = "1.0.0"
+  version = "1.0.1"
   custom_css = []
   custom_js = []
   head_custom = "site-scripts.html"
