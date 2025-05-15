@@ -1,8 +1,8 @@
-baseURL = 'http://doc.wnbgj.com/'
+baseURL = 'https://doc.wnbgj.com/'
 languageCode = 'zh-cn'
 defaultContentLanguage = 'zh-cn'
 title = 'Tong Notes'
-theme = 'ananke'
+theme = 'stack'
 
 # 版本号（用于 Docker 构建）
 [params]

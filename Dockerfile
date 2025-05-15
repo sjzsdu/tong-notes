@@ -1,5 +1,11 @@
 # 阶段一：构建 Hugo 静态网站
-FROM klakegg/hugo:0.111.3-ext AS builder
+FROM node:alpine AS builder
+
+# 安装必要的工具
+RUN apk add --no-cache wget ca-certificates
+
+# 安装 Hugo
+RUN wget -O - https://github.com/gohugoio/hugo/releases/download/v0.146.3/hugo_extended_0.146.3_Linux-64bit.tar.gz | tar -xz -C /usr/local/bin hugo
 
 # 设置工作目录
 WORKDIR /app
