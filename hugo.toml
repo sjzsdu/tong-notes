@@ -4,9 +4,22 @@ defaultContentLanguage = 'zh-cn'
 title = 'Tong Notes'
 theme = 'stack'
 
-# 版本号（用于 Docker 构建）
+
 [params]
-version = "1.0.2"
+version = "1.0.3"
+description = "这是一个关于学习和研究新东西的记录笔记。"
+favicon = "favicon.ico"
+mainSections = ["posts"]
+  [sidebar]
+    [avatar]
+    enabled = true
+    local = true
+    src = "img/avatar.jpeg"
+  [article]
+    toc = true
+    math = true
+    headingAnchor = true
+    readingTime = true
 
 # 语言设置
 [languages]
