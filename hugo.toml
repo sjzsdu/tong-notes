@@ -6,7 +6,7 @@ theme = 'stack'
 
 
 [params]
-version = "1.0.2"
+version = "1.0.4"
 description = "这是一个关于学习和研究新东西的记录笔记。"
 favicon = "favicon.ico"
 mainSections = ["posts"]
