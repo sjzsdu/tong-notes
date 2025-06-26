@@ -52,3 +52,29 @@ GitHub仓库：[https://github.com/juzhongsun/tong-notes](https://github.com/juz
 git clone https://github.com/juzhongsun/tong-notes.git
 cd tong-notes
 git submodule update --init --recursive
+```
+
+2. 本地运行
+```
+hugo server -D
+```
+3. 构建静态文件
+```
+hugo --minify
+```
+## 部署方式
+本项目支持多种部署方式：
+
+1. GitHub Pages ：通过GitHub Actions自动部署到GitHub Pages
+2. Docker部署 ：使用项目中的Dockerfile构建容器镜像
+## 技术栈
+- 静态网站生成器 ：Hugo
+- 主题 ：Stack和PaperMod
+- 部署 ：GitHub Actions, Docker
+- 图表支持 ：Mermaid.js
+- 数学公式 ：KaTeX/MathJax
+## 许可证
+本项目内容采用 CC BY-NC-ND 许可协议。
+
+## 贡献
+欢迎通过Issue或Pull Request提供建议和改进。

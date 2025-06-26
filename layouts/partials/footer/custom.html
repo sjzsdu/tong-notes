@@ -1,4 +1,5 @@
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11.7.0/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         console.log("DOMContentLoaded event fired.");
@@ -11,8 +12,66 @@
             console.log("Mermaid initialized successfully.");
             // 手动触发 Mermaid 渲染
             mermaid.init(undefined, document.querySelectorAll('.language-mermaid'));
+            
+            // 使用 MutationObserver 监听 DOM 变化，当 Mermaid 图表渲染完成时添加缩放功能
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList') {
+                        const svgElements = document.querySelectorAll('.language-mermaid svg:not(.svg-pan-zoom-enabled)');
+                        svgElements.forEach(function(svg) {
+                            if (!svg.classList.contains('svg-pan-zoom-enabled')) {
+                                svg.classList.add('svg-pan-zoom-enabled');
+                                svgPanZoom(svg, {
+                                    zoomEnabled: true,
+                                    controlIconsEnabled: true,
+                                    fit: false,
+                                    center: false,
+                                    minZoom: 0.5,
+                                    maxZoom: 10,
+                                    zoomScaleSensitivity: 0.1
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // 监听整个文档的变化
+            observer.observe(document.body, { childList: true, subtree: true });
+            
         } catch (error) {
-            console.error("Error initializing Mermaid:", error);
+            console.error("Error initializing Mermaid or SVG Pan Zoom:", error);
         }
     });
 </script>
+
+<style>
+    /* 移除可能影响图表高度的样式 */
+    .svg-pan-zoom-control-background {
+        fill: rgba(240, 240, 240, 0.8) !important;
+    }
+    
+    /* 为Mermaid图表添加样式 */
+    .language-mermaid {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+    }
+    .language-mermaid svg {
+        min-height: 400px;
+    }
+    
+    /* 控制按钮样式 */
+    .mermaid-controls button {
+        margin: 0 2px;
+        padding: 2px 5px;
+        background: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+    
+    .mermaid-controls button:hover {
+        background: #e0e0e0;
+    }
+</style>
