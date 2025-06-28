@@ -1,0 +1,20 @@
+# 作者信息
+name: "Tong"
+nickname: "Tong"
+image: "img/avatar.jpeg"
+greeting: "欢迎来到"
+
+# 联系信息
+contactInfo:
+  email: "example@example.com"
+  # 可以添加更多社交媒体链接
+  github:
+    icon: github
+    url: "https://github.com/yourusername"
+    text: "GitHub"
+
+# 个人简介
+summary:
+  - "我是一名开发者"
+  - "我热爱学习新技术"
+  - "我喜欢记录和分享知识"

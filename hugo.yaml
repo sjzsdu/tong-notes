@@ -1,0 +1,75 @@
+baseURL: 'https://doc.wnbgj.com/'
+languageCode: 'zh-cn'
+defaultContentLanguage: 'zh-cn'
+title: 'Tong Notes'
+theme: 'toha'
+
+# 语言设置
+languages:
+  zh-cn:
+    languageName: "简体中文"
+    contentDir: "content"
+    weight: 1
+    languageCode: "zh-cn"
+    title: "Tong Notes"
+
+
+
+params:
+  version: "1.0.4"
+  description: "这是一个关于学习和研究新东西的记录笔记。"
+  favicon: "favicon.ico"
+  mainSections: ["posts"]
+  # 配置顶部导航栏
+  topNavbar:
+    maxVisibleSections: 5
+  # 配置功能
+  features:
+    # 启用博客
+    blog:
+      enable: true
+      showAuthor: true
+    # 启用暗黑模式
+    darkMode:
+      enable: true
+    # 启用主题切换
+    theme:
+      enable: true
+      services:
+        light: true
+        dark: true
+        default: system
+    # 启用流程图
+    flowchart:
+      enable: true
+      services:
+        mermaid:
+          theme: default
+  # 侧边栏配置
+  sidebar:
+    avatar:
+      enabled: true
+      local: true
+      src: "img/avatar.jpeg"
+  # 文章配置
+  article:
+    toc: true
+    math: true
+    headingAnchor: true
+    readingTime: true
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+    parser:
+      attribute:
+        block: true
+        title: true
+
+# 启用输出格式
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON

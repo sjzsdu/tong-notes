@@ -1,0 +1,58 @@
+# 关于部分配置
+
+section:
+  name: "关于我"
+  id: about
+  enable: true
+  weight: 1
+  showOnNavbar: true
+
+# 你的自我介绍
+designation: "开发者 & 技术爱好者"
+company:
+  name: Tong Notes
+  url: "https://doc.wnbgj.com/"
+
+# 简短的自我介绍
+summary: "我是一名热爱技术的开发者，喜欢学习和分享新知识。这个博客记录了我在技术探索过程中的心得体会和学习笔记。"
+
+# 详细介绍（支持Markdown格式）
+description: |
+  我热衷于探索各种技术领域，包括但不限于：
+  
+  - 前端开发（Angular, React, Vue）
+  - 后端开发（Node.js, Go）
+  - 人工智能和机器学习
+  - 云计算和DevOps
+  
+  通过这个博客，我希望能与更多志同道合的朋友交流学习，共同进步。
+
+# 社交媒体链接
+socialLinks:
+  - name: GitHub
+    icon: "fab fa-github"
+    url: "https://github.com/yourusername"
+
+  - name: LinkedIn
+    icon: "fab fa-linkedin"
+    url: "https://linkedin.com/in/yourusername"
+
+  - name: Twitter
+    icon: "fab fa-twitter"
+    url: "https://twitter.com/yourusername"
+
+  - name: Email
+    icon: "fas fa-envelope"
+    url: "mailto:example@example.com"
+
+# 简历按钮
+buttons:
+  - name: 简历
+    url: "#"
+    icon: "fas fa-file-alt"
+    newPage: true
+  
+  - name: 联系我
+    url: "/contact"
+    icon: "fas fa-envelope"
+    newPage: false

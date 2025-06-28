@@ -1,0 +1,28 @@
+# 导航栏配置
+
+# 左侧菜单项
+left:
+  - name: 首页
+    url: /
+    weight: 1
+  - name: 博客
+    url: /posts/
+    weight: 2
+  - name: 分类
+    url: /categories/
+    weight: 3
+  - name: 标签
+    url: /tags/
+    weight: 4
+  - name: 关于
+    url: /about/
+    weight: 5
+
+# 右侧菜单项
+right:
+  - name: 联系
+    url: /contact/
+    weight: 1
+  - name: 搜索
+    url: /search/
+    weight: 2

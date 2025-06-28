@@ -1,0 +1,41 @@
+# 首页各部分配置
+
+# 关于部分
+- section:
+    name: "关于我"
+    id: about
+    enable: true
+    weight: 1
+    showOnNavbar: true
+
+# 技能部分
+- section:
+    name: "技能"
+    id: skills
+    enable: true
+    weight: 2
+    showOnNavbar: true
+
+# 经历部分
+- section:
+    name: "工作经历"
+    id: experiences
+    enable: true
+    weight: 3
+    showOnNavbar: true
+
+# 项目部分
+- section:
+    name: "项目"
+    id: projects
+    enable: true
+    weight: 4
+    showOnNavbar: true
+
+# 最近文章部分
+- section:
+    name: "最近文章"
+    id: recent-posts
+    enable: true
+    weight: 5
+    showOnNavbar: true

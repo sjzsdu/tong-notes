@@ -1,0 +1,12 @@
+# 最近文章部分配置
+
+section:
+  name: "最近文章"
+  id: recent-posts
+  enable: true
+  weight: 5
+  showOnNavbar: true
+
+# 设置显示的文章数量
+params:
+  limit: 4

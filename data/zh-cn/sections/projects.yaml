@@ -1,0 +1,55 @@
+# 项目部分配置
+
+section:
+  name: "项目"
+  id: projects
+  enable: false  # 暂时禁用项目部分
+  weight: 4
+  showOnNavbar: true
+
+# 过滤器按钮
+buttons:
+  - name: 全部
+    filter: "all"
+  - name: 专业
+    filter: "professional"
+  - name: 个人
+    filter: "personal"
+  - name: 开源
+    filter: "open-source"
+
+# 项目列表
+projects:
+  - name: "项目 A"
+    logo: /images/sections/projects/project-a.png
+    role: "项目负责人"
+    timeline: "2022年 - 至今"
+    repo: https://github.com/username/project-a # 如果是开源项目
+    url: https://project-a.com # 项目网站
+    summary: "一个创新型Web应用项目，提供智能数据分析功能。"
+    tags: ["professional", "web"]
+
+  - name: "项目 B"
+    logo: /images/sections/projects/project-b.png
+    role: "开发者"
+    timeline: "2021年 - 2022年"
+    repo: https://github.com/username/project-b
+    url: https://project-b.com
+    summary: "一个开源的工具库，提供常用的开发组件。"
+    tags: ["open-source", "library"]
+
+  - name: "项目 C"
+    logo: /images/sections/projects/project-c.png
+    role: "贡献者"
+    timeline: "2020年 - 2021年"
+    repo: https://github.com/username/project-c
+    summary: "一个个人博客系统，基于Hugo构建。"
+    tags: ["personal", "blog"]
+
+  - name: "项目 D"
+    logo: /images/sections/projects/project-d.png
+    role: "技术顾问"
+    timeline: "2019年 - 2020年"
+    url: https://project-d.com
+    summary: "一个企业级应用系统，提供全面的业务管理功能。"
+    tags: ["professional", "enterprise"]

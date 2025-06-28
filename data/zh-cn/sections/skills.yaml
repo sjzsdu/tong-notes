@@ -1,0 +1,70 @@
+# 技能部分配置
+
+section:
+  name: "技能"
+  id: skills
+  enable: false  # 暂时禁用技能部分
+  weight: 2
+  showOnNavbar: true
+
+# 你的技能
+skills:
+  # 编程语言技能组
+  - name: 编程语言
+    logo: /images/sections/skills/programming.png
+    summary: "熟练掌握多种编程语言，能够根据项目需求选择合适的语言。"
+    skills:
+      - name: Go
+        percentage: 90
+      - name: JavaScript
+        percentage: 85
+      - name: TypeScript
+        percentage: 80
+      - name: Python
+        percentage: 75
+      - name: C/C++
+        percentage: 70
+
+  # 框架技能组
+  - name: 框架 & 工具
+    logo: /images/sections/skills/frameworks.png
+    summary: "熟悉多种前后端框架和工具，能够快速构建高质量应用。"
+    skills:
+      - name: Angular
+        percentage: 85
+      - name: React
+        percentage: 80
+      - name: Node.js
+        percentage: 75
+      - name: Docker
+        percentage: 70
+      - name: Kubernetes
+        percentage: 65
+
+  # 数据库技能组
+  - name: 数据库
+    logo: /images/sections/skills/database.png
+    summary: "掌握多种数据库系统，能够设计高效的数据存储方案。"
+    skills:
+      - name: MySQL
+        percentage: 85
+      - name: MongoDB
+        percentage: 80
+      - name: Redis
+        percentage: 75
+      - name: PostgreSQL
+        percentage: 70
+
+  # 云服务技能组
+  - name: 云服务
+    logo: /images/sections/skills/cloud.png
+    summary: "熟悉主流云服务平台，能够部署和管理云端应用。"
+    skills:
+      - name: AWS
+        percentage: 80
+      - name: Google Cloud
+        percentage: 75
+      - name: Azure
+        percentage: 70
+      - name: Alibaba Cloud
+        percentage: 65

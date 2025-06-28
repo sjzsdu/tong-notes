@@ -18,6 +18,10 @@ Thumbs.db
 *.swo
 *~
 
+# 前端要排除的
+node_modules/
+public
+
 # 临时文件
 tmp/
 temp/
