@@ -71,7 +71,6 @@
   {{ $navBarTitle = site.Title }}
 {{ end }}
 
-<!-- 自定义导航栏，添加目录大纲切换按钮 -->
 <nav class="navbar navbar-expand-xl top-navbar shadow {{ if .IsHome}}transparent-navbar homepage{{end}}" id="top-navbar">
   <div class="container">
     {{ if not .IsHome }}
@@ -110,7 +109,7 @@
         </li>
         {{ if $sections }}
           {{ $sectionCount := 1 }}
-          {{ range sort $sections "section.weight" }}
+          {{ range $sections }}
             {{ if and (.section.enable) (.section.showOnNavbar)}}
               {{ $sectionCount  = add $sectionCount 1}}
               {{ if le $sectionCount $maxVisibleSections }}
@@ -125,7 +124,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{i18n "more" }}</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 {{ $sectionCount := 1 }}
-                {{ range sort $sections "section.weight" }}
+                {{ range $sections }}
                   {{ if and (.section.enable) (.section.showOnNavbar) }}
                     {{ $sectionCount  = add $sectionCount 1}}
                     {{ if gt $sectionCount $maxVisibleSections }}

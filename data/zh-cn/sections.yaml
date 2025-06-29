@@ -1,6 +1,4 @@
 # 首页各部分配置
-
-# 关于部分
 - section:
     name: "关于我"
     id: about

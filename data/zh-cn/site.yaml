@@ -1,7 +1,7 @@
 # 网站配置
 
 # 网站版权信息
-copyright: "© 2024 Tong Notes."
+copyright: "© 2025 Tong Notes."
 
 # 网站描述（用于SEO）
 description: "这是一个关于学习和研究新东西的记录笔记。"
@@ -16,14 +16,6 @@ openGraph:
 
 # 自定义菜单项
 customMenus:
-  - name: "首页"
-    url: "/"
-    hideFromNavbar: false
-    showOnFooter: true
-  - name: "博客"
-    url: "/posts/"
-    hideFromNavbar: false
-    showOnFooter: true
   - name: "分类"
     url: "/categories/"
     hideFromNavbar: false
@@ -47,18 +39,18 @@ customMenus:
 
 # 网站所有者信息
 owner:
-  name: "Tong"
-  nickname: "Tong"
+  name: "Juzhong Sun"
+  nickname: "Juzhong Sun"
   image: "img/avatar.jpeg"
   greeting: "欢迎来到"
   
   # 联系信息（将显示在页脚）
   contactInfo:
-    email: "example@example.com"
+    email: "122828837@qq.com"
     # 可以添加更多社交媒体链接
     github:
       icon: github
-      url: "https://github.com/yourusername"
+      url: "https://github.com/sjzsdu"
       text: "GitHub"
 
   # 个人简介

@@ -45,6 +45,8 @@ params:
       services:
         mermaid:
           theme: default
+    toc:
+      enable: true
   # 侧边栏配置
   sidebar:
     avatar:

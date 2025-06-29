@@ -20,6 +20,5 @@ description: "关于我的个人介绍"
 
 - Email: 122828837@qq.com
 - GitHub: [github.com/sjzsdu](https://github.com/sjzsdu)
-- LinkedIn: [linkedin.com/in/yourusername](https://linkedin.com/in/yourusername)
 
 欢迎通过以上方式与我联系，交流技术，分享经验。

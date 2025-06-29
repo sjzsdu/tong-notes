@@ -1,16 +1,16 @@
 # 作者信息
-name: "Tong"
-nickname: "Tong"
+name: "Tong Notes"
+nickname: "Tong Notes"
 image: "img/avatar.jpeg"
 greeting: "欢迎来到"
 
 # 联系信息
 contactInfo:
-  email: "example@example.com"
+  email: "122828837@qq.com"
   # 可以添加更多社交媒体链接
   github:
     icon: github
-    url: "https://github.com/yourusername"
+    url: "https://github.com/sjzsdu"
     text: "GitHub"
 
 # 个人简介

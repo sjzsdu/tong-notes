@@ -1,14 +1,13 @@
 # Tong Notes
 
-[![Deploy Hugo](https://github.com/juzhongsun/tong-notes/actions/workflows/deploy.yml/badge.svg)](https://github.com/juzhongsun/tong-notes/actions/workflows/deploy.yml)
 
 ## 项目简介
 
 这是一个基于Hugo静态网站生成器的个人笔记和博客网站，用于记录学习和研究新东西的笔记。
 
-网站地址：[https://doc.wnbgj.com/](https://doc.wnbgj.com/)
+网站地址：[https://sjzsdu.github.io/tong-notes/](https://sjzsdu.github.io/tong-notes/)
 
-GitHub仓库：[https://github.com/juzhongsun/tong-notes](https://github.com/juzhongsun/tong-notes)
+GitHub仓库：[https://github.com/sjzsdu/tong-notes](https://github.com/juzhongsun/tong-notes)
 
 ## 主要特点
 
@@ -49,7 +48,7 @@ GitHub仓库：[https://github.com/juzhongsun/tong-notes](https://github.com/juz
 1. 克隆仓库
 
 ```bash
-git clone https://github.com/juzhongsun/tong-notes.git
+git clone https://github.com/sjzsdu/tong-notes.git
 cd tong-notes
 git submodule update --init --recursive
 ```
