@@ -1,0 +1,17 @@
+{{ $original := partial "head.html" . }}
+
+{{ $original }}
+
+<!-- 加载自定义CSS -->
+{{ $customCSS := resources.Get "css/custom.css" }}
+{{ if $customCSS }}
+  {{ $customCSS = $customCSS | resources.Minify }}
+  <link rel="stylesheet" href="{{ $customCSS.RelPermalink }}" integrity="{{ $customCSS.Data.Integrity }}">
+{{ end }}
+
+<!-- 加载自定义JavaScript -->
+{{ $customJS := resources.Get "js/custom.js" }}
+{{ if $customJS }}
+  {{ $customJS = $customJS | resources.Minify }}
+  <script src="{{ $customJS.RelPermalink }}" integrity="{{ $customJS.Data.Integrity }}"></script>
+{{ end }}

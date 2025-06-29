@@ -1,6 +1,6 @@
 ---
 title: "关于我"
-date: 2024-05-01T08:00:00+08:00
+date: 2025-05-01T08:00:00+08:00
 draft: false
 description: "关于我的个人介绍"
 ---
@@ -18,8 +18,8 @@ description: "关于我的个人介绍"
 
 ## 联系方式
 
-- Email: example@example.com
-- GitHub: [github.com/yourusername](https://github.com/yourusername)
+- Email: 122828837@qq.com
+- GitHub: [github.com/sjzsdu](https://github.com/sjzsdu)
 - LinkedIn: [linkedin.com/in/yourusername](https://linkedin.com/in/yourusername)
 
 欢迎通过以上方式与我联系，交流技术，分享经验。

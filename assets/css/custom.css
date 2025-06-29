@@ -1,0 +1,51 @@
+/* 自定义样式 */
+
+/* 目录大纲切换按钮样式 */
+#toc-toggler {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border: none;
+}
+
+/* 在小屏幕设备上显示目录大纲切换按钮 */
+@media (max-width: 1200px) {
+  #toc-toggler {
+    display: none; /* 默认隐藏，由JavaScript根据是否有目录内容决定是否显示 */
+  }
+  
+  /* 默认隐藏TOC区域 */
+  .toc-section {
+    display: none !important;
+  }
+  
+  /* 当目录显示时的样式 */
+  .toc-section.hide {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: white;
+    z-index: 999;
+    overflow-y: auto;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  /* 暗黑模式下的TOC背景色 */
+  html[data-theme='dark'] .toc-section.hide {
+    background-color: #242424;
+  }
+}
