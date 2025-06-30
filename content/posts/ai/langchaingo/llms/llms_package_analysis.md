@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "深入分析LangChainGo的llms包架构，包括核心接口、消息处理、工具调用、流式响应和缓存机制等核心流程，展示其作为构建LLM应用的Go语言框架的优势"
 keywords: ["LangChainGo", "Go语言", "LLM框架", "大语言模型", "llms包", "API设计", "流程分析", "泳道图"]
 tags: ["架构设计", "Go语言", "LLM应用", "系统分析", "接口设计", "模块化架构", "AI框架"]
-categories: ["系统架构", "人工智能", "编程语言"]
+categories: ["ai", "langchaingo", "llm"]
 weight: 8001
 showInHome: true
 license: "CC BY-NC-ND"

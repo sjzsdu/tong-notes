@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "通过泳道图分析LangChainGo中llms包的主要流程，包括基本调用流程、多模态内容处理流程等，帮助理解其工作原理"
 keywords: ["LangChainGo", "Go语言", "LLM框架", "大语言模型", "流程分析", "泳道图", "调用流程", "多模态处理"]
 tags: ["架构设计", "Go语言", "LLM应用", "系统分析", "接口设计", "模块化架构", "AI框架"]
-categories: ["系统架构", "人工智能", "编程语言"]
+categories: ["ai", "langchaingo", "llm"]
 weight: 8004
 showInHome: true
 license: "CC BY-NC-ND"

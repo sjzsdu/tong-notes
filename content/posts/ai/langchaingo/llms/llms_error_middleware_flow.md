@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "通过泳道图分析LangChainGo中llms包的错误处理和中间件流程，包括错误映射、重试机制和中间件链等，帮助理解其异常处理机制"
 keywords: ["LangChainGo", "Go语言", "LLM框架", "大语言模型", "错误处理", "中间件", "泳道图", "异常处理"]
 tags: ["架构设计", "Go语言", "LLM应用", "系统分析", "接口设计", "模块化架构", "AI框架"]
-categories: ["系统架构", "人工智能", "编程语言"]
+categories: ["ai", "langchaingo", "llm"]
 weight: 8007
 showInHome: true
 license: "CC BY-NC-ND"

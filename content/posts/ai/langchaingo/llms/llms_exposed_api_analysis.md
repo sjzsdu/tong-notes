@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "详细分析LangChainGo中llms包对外暴露的API，并以此为抓手对各部分流程进行泳道图分析，帮助理解其接口设计和使用方式"
 keywords: ["LangChainGo", "Go语言", "LLM框架", "大语言模型", "API设计", "接口分析", "Model接口", "MessageContent"]
 tags: ["架构设计", "Go语言", "LLM应用", "系统分析", "接口设计", "模块化架构", "AI框架"]
-categories: ["系统架构", "人工智能", "编程语言"]
+categories: ["ai", "langchaingo", "llm"]
 weight: 8005
 showInHome: true
 license: "CC BY-NC-ND"

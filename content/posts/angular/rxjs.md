@@ -7,7 +7,7 @@ author: 孙巨中
 description: "深入介绍RxJS的核心概念、基本用法和典型应用场景，帮助掌握响应式编程"
 keywords: ["RxJS", "响应式编程", "Observable", "JavaScript", "异步编程", "操作符", "函数式编程", "前端开发"]
 tags: ["RxJS", "JavaScript", "响应式编程", "异步处理", "前端开发", "函数式编程"]
-categories: ["前端开发", "编程技术"]
+categories: ["Angular"]
 weight: 8500
 showInHome: true
 license: "CC BY-NC-ND"

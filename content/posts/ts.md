@@ -7,7 +7,7 @@ author: 孙巨中
 description: "深入解析 TypeScript 的核心特性、优势以及典型应用场景，帮助开发者掌握这一 JavaScript 超集语言。"
 keywords: ["TypeScript", "JavaScript", "静态类型", "前端开发", "类型系统", "泛型", "接口", "装饰器", "模块系统"]
 tags: ["TypeScript", "JavaScript", "前端开发", "编程语言", "类型系统", "静态类型检查", "微软", "开源"]
-categories: ["前端开发", "编程语言"]
+categories: ["Ts"]
 weight: 8500
 showInHome: true
 license: "CC BY-NC-ND"

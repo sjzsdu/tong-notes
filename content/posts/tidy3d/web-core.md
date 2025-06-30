@@ -7,7 +7,7 @@ author: 孙巨中
 description: "深入解析Tidy3D电磁仿真软件的Web Core模块架构设计，包括云服务交互、任务管理和环境配置的实现原理"
 keywords: ["Tidy3D", "Web Core", "云计算", "电磁仿真", "任务管理", "HTTP通信", "环境配置", "计算电磁学"]
 tags: ["云服务", "计算电磁学", "软件架构", "API设计", "科学计算", "Python"]
-categories: ["计算电磁学", "软件开发"]
+categories: ["Tidy3D"]
 weight: 8200
 series: ["Tidy3D系列"]
 showInHome: true

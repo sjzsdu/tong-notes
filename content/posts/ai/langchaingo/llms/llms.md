@@ -8,7 +8,7 @@ author: "孙巨中"
 description: "深入分析LangChainGo框架中LLMs包的结构、接口设计和使用模式，包括多模态支持、工具调用、缓存机制等核心功能"
 keywords: ["LangChainGo", "LLMs", "Go语言", "大型语言模型", "API抽象", "多模态", "工具调用", "缓存机制"]
 tags: ["架构设计", "Go语言", "LLM应用", "系统分析", "接口设计", "模块化架构", "AI框架"]
-categories: ["系统架构", "人工智能", "编程语言"]
+categories: ["ai", "langchaingo", "llm"]
 weight: 0
 showInHome: true
 license: "CC BY-NC-ND"

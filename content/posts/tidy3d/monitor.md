@@ -7,7 +7,7 @@ author: 孙巨中
 description: "本文详细解析了Tidy3D Monitor系统的多层次架构设计，包括基础抽象层、时域/频域分类、场监视器系统等核心模块。"
 keywords: ["Tidy3D", "Monitor系统", "电磁仿真", "类层次结构", "场监视器", "通量监视器", "模式监视器", "场投影", "设计模式", "存储优化"]
 tags: ["Tidy3D", "系统架构", "监视器", "电磁仿真", "面向对象设计", "类层次结构", "设计模式", "性能优化"]
-categories: ["技术文档", "系统架构", "电磁仿真"]
+categories: ["Tidy3D"]
 weight: 8500
 series: ["Tidy3D系列"]
 showInHome: true

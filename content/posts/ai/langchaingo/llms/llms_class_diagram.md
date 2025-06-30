@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "通过类图详细分析LangChainGo的llms包结构，包括核心接口、消息处理类、内容部分类、工具调用类和缓存机制类等，展示其面向对象设计和模块化架构"
 keywords: ["LangChainGo", "Go语言", "LLM框架", "大语言模型", "类图", "接口设计", "结构体设计", "面向对象"]
 tags: ["架构设计", "Go语言", "LLM应用", "系统分析", "接口设计", "模块化架构", "AI框架"]
-categories: ["系统架构", "人工智能", "编程语言"]
+categories: ["ai", "langchaingo", "llm"]
 weight: 8002
 showInHome: true
 license: "CC BY-NC-ND"

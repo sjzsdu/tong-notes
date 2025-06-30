@@ -7,7 +7,7 @@ author: 孙巨中
 description: "深入解析Tidy3D电磁仿真软件的Medium类体系架构设计，包括材料光学特性建模、色散介质和非线性材料的实现原理"
 keywords: ["Tidy3D", "Medium类", "材料建模", "电磁仿真", "色散介质", "非线性材料", "光学特性", "计算电磁学"]
 tags: ["材料建模", "计算电磁学", "软件架构", "色散介质", "科学计算", "Python"]
-categories: ["计算电磁学", "软件开发"]
+categories: ["Tidy3D"]
 weight: 8100
 series: ["Tidy3D系列"]
 showInHome: true

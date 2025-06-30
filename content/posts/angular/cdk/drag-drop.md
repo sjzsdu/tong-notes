@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "本文深入分析Angular CDK拖放模块的实现原理和架构设计，包括核心组件、工作流程和关键实现细节，帮助开发者理解其内部机制。"
 keywords: ["Angular", "CDK", "Drag-Drop", "拖放", "组件开发", "前端开发", "UI交互", "DragRef", "DropListRef", "DragDropRegistry"]
 tags: ["Angular", "CDK", "Drag-Drop", "前端开发", "UI交互"]
-categories: ["前端技术", "Angular", "组件开发"]
+categories: [ "Angular", "CDK"]
 weight: 5000
 showInHome: true
 license: "CC BY-NC-ND"

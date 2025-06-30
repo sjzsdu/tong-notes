@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "深入分析TradingAgents多智能体交易框架，包括系统架构、组件关系、智能体交互流程和记忆系统设计"
 keywords: ["TradingAgents", "多智能体系统", "交易框架", "LLM应用", "智能体协作", "记忆系统", "反思机制", "工作流管理", "数据分析", "金融决策"]
 tags: ["架构设计", "多智能体", "金融科技", "LLM应用", "系统分析", "交易系统", "智能决策", "记忆机制", "工作流管理", "数据集成"]
-categories: ["系统架构", "人工智能", "金融科技"]
+categories: ["ai"]
 weight: 8500
 showInHome: true
 license: "CC BY-NC-ND"

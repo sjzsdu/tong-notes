@@ -7,7 +7,7 @@ author: 孙巨中
 description: "深入解析Tidy3D电磁仿真软件的Structure类体系架构设计，包括几何结构建模、材料属性和结构组合的实现原理"
 keywords: ["Tidy3D", "Structure类", "几何建模", "电磁仿真", "结构设计", "材料属性", "几何形状", "计算电磁学"]
 tags: ["几何建模", "计算电磁学", "软件架构", "结构设计", "科学计算", "Python"]
-categories: ["计算电磁学", "软件开发"]
+categories: ["Tidy3D"]
 weight: 8300
 series: ["Tidy3D系列"]
 showInHome: true

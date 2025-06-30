@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "详细分析LangChainGo中llms包各个提供商的实现方式和差异，包括OpenAI、Anthropic、Google AI、Hugging Face和Bedrock等，帮助理解不同LLM提供商的集成方式"
 keywords: ["LangChainGo", "Go语言", "LLM框架", "大语言模型", "OpenAI", "Anthropic", "Google AI", "Hugging Face", "Bedrock"]
 tags: ["架构设计", "Go语言", "LLM应用", "系统分析", "接口设计", "模块化架构", "AI框架"]
-categories: ["系统架构", "人工智能", "编程语言"]
+categories: ["ai", "langchaingo", "llm"]
 weight: 8003
 showInHome: true
 license: "CC BY-NC-ND"

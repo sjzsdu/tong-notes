@@ -7,7 +7,7 @@ author: 孙巨中
 description: "深入解析HubSpot CMS模块系统的架构设计、实现原理和开发实践，帮助开发者掌握模块开发的核心技术。"
 keywords: ["HubSpot", "CMS", "模块开发", "网站构建", "内容管理系统", "前端开发", "营销技术"]
 tags: ["HubSpot", "CMS开发", "前端架构", "模块化设计", "营销技术"]
-categories: ["技术解析", "前端开发"]
+categories: ["HubSpot"]
 weight: 8500
 showInHome: true
 license: "CC BY-NC-ND"

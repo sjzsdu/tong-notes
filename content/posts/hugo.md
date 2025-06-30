@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "全面介绍Hugo静态网站生成器的核心功能、语法和架构，从使用者角度提供实用指南和最佳实践。"
 keywords: ["Hugo", "静态网站生成器", "Go语言", "性能优化", "模板系统", "多语言支持", "并行处理", "内存优化", "Markdown", "网站构建", "前端开发", "内容管理"]
 tags: ["静态网站", "网站生成器", "Go", "性能优化", "模板引擎", "多语言", "并行计算", "内存管理", "Markdown处理", "网站架构"]
-categories: ["技术解析", "Web开发", "性能优化"]
+categories: ["Hugo"]
 weight: 8500
 showInHome: true
 license: "CC BY-NC-ND"

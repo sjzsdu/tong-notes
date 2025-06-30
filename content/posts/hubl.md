@@ -7,7 +7,7 @@ author: 孙巨中
 description: "本文详细介绍HubSpot CMS专用模板语言HubL的核心语法、常用标签和实际应用示例，帮助开发者快速掌握HubL编程。"
 keywords: ["HubL", "HubSpot", "模板语言", "Jinja2", "CMS", "网页开发", "HubSpot CRM", "服务器端渲染"]
 tags: ["HubSpot", "模板引擎", "Web开发", "CMS", "HubL", "Jinja2", "服务器端渲染"]
-categories: ["Web开发", "CMS"]
+categories: ["Hubspot"]
 weight: 7500
 showInHome: true
 license: "CC BY-NC-ND"

@@ -7,7 +7,7 @@ author: "孙巨中"
 description: "通过泳道图分析LangChainGo中llms包的消息处理流程，包括消息创建、转换和处理等环节，帮助理解其工作原理"
 keywords: ["LangChainGo", "Go语言", "LLM框架", "大语言模型", "消息处理", "泳道图", "MessageContent", "ContentPart"]
 tags: ["架构设计", "Go语言", "LLM应用", "系统分析", "接口设计", "模块化架构", "AI框架"]
-categories: ["系统架构", "人工智能", "编程语言"]
+categories: ["ai", "langchaingo", "llm"]
 weight: 8006
 showInHome: true
 license: "CC BY-NC-ND"

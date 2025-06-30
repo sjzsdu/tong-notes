@@ -7,7 +7,7 @@ author: 孙巨中
 description: "深入分析Tidy3D电磁仿真软件的Source系统架构设计，包括电流源、场源、时间依赖和激励源的实现原理"
 keywords: ["Tidy3D", "Source系统", "电磁源", "电磁仿真", "电流源", "场源", "时间依赖", "计算电磁学"]
 tags: ["电磁源", "计算电磁学", "软件架构", "FDTD", "科学计算", "Python"]
-categories: ["计算电磁学", "软件开发"]
+categories: ["Tidy3D"]
 weight: 8200
 series: ["Tidy3D系列"]
 showInHome: true

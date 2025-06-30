@@ -7,7 +7,7 @@ author: 孙巨中
 description: "深入分析Tidy3D电磁仿真软件的模拟系统架构设计，包括核心类结构、设计模式和关键技术特性"
 keywords: ["Tidy3D", "模拟系统", "FDTD", "电磁仿真", "边界条件", "Yee网格", "计算电磁学", "科学计算"]
 tags: ["模拟系统", "计算电磁学", "软件架构", "FDTD", "科学计算", "Python"]
-categories: ["计算电磁学", "软件开发"]
+categories: ["Tidy3D"]
 weight: 8000
 series: ["Tidy3D系列"]
 showInHome: true
