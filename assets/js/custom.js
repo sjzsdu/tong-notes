@@ -47,4 +47,33 @@ document.addEventListener('DOMContentLoaded', function() {
       tocToggler.style.display = 'none';
     }
   }
+
+  // 数学公式优化
+  // 监听MathJax渲染完成事件
+  if (typeof MathJax !== 'undefined') {
+    MathJax.startup.promise.then(() => {
+      // 为长数学公式添加滚动功能
+      const mathDisplays = document.querySelectorAll('.MathJax_Display');
+      mathDisplays.forEach(display => {
+        if (display.scrollWidth > display.clientWidth) {
+          display.style.overflowX = 'auto';
+        }
+      });
+    });
+  }
+
+  // 处理页面主题切换时的数学公式重新渲染
+  const themeToggler = document.querySelector('[data-theme-toggle]');
+  if (themeToggler) {
+    themeToggler.addEventListener('click', function() {
+      // 延迟一点时间让主题切换完成
+      setTimeout(() => {
+        if (typeof MathJax !== 'undefined') {
+          MathJax.typesetPromise().then(() => {
+            console.log('数学公式已重新渲染');
+          });
+        }
+      }, 100);
+    });
+  }
 });

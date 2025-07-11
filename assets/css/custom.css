@@ -49,3 +49,138 @@
     background-color: #242424;
   }
 }
+
+/* 数学公式样式优化 */
+.MathJax, .katex {
+  font-size: 1.1em !important;
+  line-height: 1.5 !important;
+}
+
+/* 行内公式样式 */
+.MathJax_Display, .katex-display {
+  margin: 1em 0 !important;
+  padding: 0.5em !important;
+  text-align: center !important;
+  overflow-x: auto !important;
+}
+
+/* 行内公式不换行 */
+.MathJax, .katex {
+  white-space: nowrap !important;
+}
+
+/* 数学公式在移动设备上的优化 */
+@media (max-width: 768px) {
+  .MathJax, .katex {
+    font-size: 0.9em !important;
+  }
+  
+  .MathJax_Display, .katex-display {
+    overflow-x: auto !important;
+    padding: 0.3em !important;
+  }
+}
+
+/* 数学公式背景色优化 */
+.MathJax_Display, .katex-display {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+  border-left: 3px solid var(--primary-color, #007bff);
+}
+
+/* 暗黑模式下的数学公式背景 */
+html[data-theme='dark'] .MathJax_Display,
+html[data-theme='dark'] .katex-display {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 修复数学公式的颜色在暗黑模式下的显示 */
+html[data-theme='dark'] .MathJax,
+html[data-theme='dark'] .katex {
+  color: #e0e0e0 !important;
+}
+
+/* 数学公式的滚动条样式 */
+.MathJax_Display::-webkit-scrollbar,
+.katex-display::-webkit-scrollbar {
+  height: 4px;
+}
+
+.MathJax_Display::-webkit-scrollbar-thumb,
+.katex-display::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.MathJax_Display::-webkit-scrollbar-thumb:hover,
+.katex-display::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* 图片样式优化 */
+.content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 1.5em auto;
+  display: block;
+}
+
+/* 图片标题样式 */
+.content figure {
+  text-align: center;
+  margin: 2em 0;
+}
+
+.content figure img {
+  margin-bottom: 0.5em;
+}
+
+.content figcaption {
+  color: #666;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 0.5em;
+  padding: 0 1em;
+}
+
+/* 暗黑模式下的图片样式 */
+html[data-theme='dark'] .content img {
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme='dark'] .content figcaption {
+  color: #ccc;
+}
+
+/* 响应式图片 */
+@media (max-width: 768px) {
+  .content img {
+    margin: 1em auto;
+  }
+  
+  .content figure {
+    margin: 1.5em 0;
+  }
+  
+  .content figcaption {
+    font-size: 0.85em;
+    padding: 0 0.5em;
+  }
+}
+
+/* 图片缩放效果 */
+.content img:hover {
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+/* 图片居中对齐 */
+.content .center {
+  text-align: center;
+}
+
+.content .center img {
+  margin: 0 auto;
+}

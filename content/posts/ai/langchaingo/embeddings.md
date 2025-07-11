@@ -1,3 +1,13 @@
+---
+title: "LangChainGo Embeddings 包分析"
+date: 2025-06-30T10:00:00+08:00
+author: "AI 助手"
+description: "对 LangChainGo 中 embeddings 包的全面分析，包括核心接口、实现和使用方法"
+tags: ["LangChainGo", "embeddings", "向量嵌入", "AI", "NLP"]
+categories: ["langchaingo"]
+draft: false
+---
+
 # LangChainGo Embeddings 包分析
 
 ## 1. 概述

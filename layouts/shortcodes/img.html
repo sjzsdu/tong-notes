@@ -1,0 +1,28 @@
+{{/* 
+图片优化shortcode
+用法: {{< img src="/images/example.jpg" alt="描述" caption="图片说明" class="center" >}}
+*/}}
+
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "图片" }}
+{{ $caption := .Get "caption" }}
+{{ $title := .Get "title" | default $alt }}
+{{ $class := .Get "class" | default "center" }}
+{{ $width := .Get "width" }}
+{{ $height := .Get "height" }}
+{{ $loading := .Get "loading" | default "lazy" }}
+
+<figure class="{{ $class }}">
+  <img 
+    src="{{ $src | relURL }}" 
+    alt="{{ $alt }}" 
+    title="{{ $title }}"
+    {{ with $width }}width="{{ . }}"{{ end }}
+    {{ with $height }}height="{{ . }}"{{ end }}
+    loading="{{ $loading }}"
+    decoding="async"
+  />
+  {{ with $caption }}
+    <figcaption>{{ . | markdownify }}</figcaption>
+  {{ end }}
+</figure>

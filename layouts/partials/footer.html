@@ -22,6 +22,10 @@
                     // 设置最大高度为80vh
                     var maxHeight = '80vh';
                     svg.style.maxHeight = maxHeight;
+
+                    // 设置最小高度为200px
+                    var minHeight = '300px';
+                    svg.style.minHeight = minHeight;
                     
                     // 确保SVG有明确的宽高
                     svg.setAttribute('width', originalWidth);
@@ -44,3 +48,23 @@
         }
     });
 </script>
+
+
+<!-- 数学公式支持 - MathJax -->
+{{ if .Params.math | default .Site.Params.article.math }}
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true,
+      tags: 'ams'
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code', 'a']
+    }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{{ end }}

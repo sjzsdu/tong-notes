@@ -68,6 +68,9 @@ markup:
       attribute:
         block: true
         title: true
+  # 启用数学公式渲染
+  math:
+    enable: true
 
 # 启用输出格式
 outputs:
