@@ -282,7 +282,7 @@ graph LR
 ### 对象间关系
 
 ```mermaid
-graph TB
+flowchart TB
     subgraph "关联关系类型"
         Attr[Attributions]
         

@@ -1,6 +1,6 @@
 ---
 title: "LangChainGo Callbacks 包分析"
-date: 2023-07-10T10:00:00+08:00
+date: 2023-07-10
 author: "AI 助手"
 description: "LangChainGo callbacks 包的架构分析和设计模式"
 tags: ["LangChainGo", "Go", "回调", "设计模式"]

@@ -3,6 +3,7 @@ languageCode: 'zh-cn'
 defaultContentLanguage: 'zh-cn'
 title: 'Tong Notes'
 theme: 'toha'
+buildFuture: true
 
 # 语言设置
 languages:

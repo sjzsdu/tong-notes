@@ -1,3 +1,16 @@
+---
+title: "UVF 框架使用指南与实战示例"
+date: 2025-07-30T10:00:00+08:00
+draft: false
+description: "基于 UVF (Unified Visualization Framework) 的深入研读，通过完整的实际案例展示如何使用这个强大的 3D 可视化框架"
+tags: ["UVF", "3D可视化", "TypeScript", "Three.js", "WebGL", "科学计算", "数据可视化"]
+categories: ["前端技术", "可视化", "技术教程"]
+series: ["UVF框架"]
+weight: 3
+toc: true
+math: false
+---
+
 # UVF 框架使用指南与实战示例
 
 基于前面对 UVF (Unified Visualization Framework) 的深入研读，本文档将通过一个完整的实际案例来展示如何使用这个强大的 3D 可视化框架。

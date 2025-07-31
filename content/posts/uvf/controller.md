@@ -1,3 +1,15 @@
+---
+title: "UVF Controller 架构解读"
+date: 2025-01-28T10:00:00+08:00
+draft: false
+description: "深入解析 UVF (Unified Visualization Framework) 的 Controller 架构，剖析这个复杂的 3D 场景管理系统如何通过多个专业化组件实现高效管理"
+tags: ["UVF", "3D可视化", "架构设计", "控制器", "TypeScript"]
+categories: ["前端技术", "架构分析", "技术解析"]
+series: ["UVF框架"]
+weight: 1
+toc: true
+---
+
 # UVF Controller 架构解读
 
 ## 概述
