@@ -282,26 +282,26 @@ graph LR
 ### 对象间关系
 
 ```mermaid
-flowchart TB
+graph TB
     subgraph "关联关系类型"
-        Attr[Attributions]
+        Attr["Attributions"]
         
         subgraph "层次关系"
-            Members[members: ObjectId[] - 成员对象]
-            Parent[packedParentId: ObjectId - 父级对象]
-            Children[children: ObjectId[] - 子对象]
+            Members["members: ObjectId[] - 成员对象"]
+            Parent["packedParentId: ObjectId - 父级对象"]
+            Children["children: ObjectId[] - 子对象"]
         end
         
         subgraph "几何关系"
-            Sides[sides: FaceId[] - 相邻面]
-            Edges[edges: EdgeId[] - 边缘]
-            Vertices[vertices: VertexId[] - 顶点]
+            Sides["sides: FaceId[] - 相邻面"]
+            Edges["edges: EdgeId[] - 边缘"]
+            Vertices["vertices: VertexId[] - 顶点"]
         end
         
         subgraph "引用关系"
-            Position[position: PointId - 位置点]
-            Solid[solid: SolidGeometryId - 所属实体]
-            Surface[surface: SurfaceQuiltId - 所属表面]
+            Position["position: PointId - 位置点"]
+            Solid["solid: SolidGeometryId - 所属实体"]
+            Surface["surface: SurfaceQuiltId - 所属表面"]
         end
     end
     
@@ -343,27 +343,27 @@ flowchart TD
 ```mermaid
 graph TB
     subgraph "资源管理系统"
-        Res[Resources]
+        Res["Resources"]
         
         subgraph "缓冲区资源 (BufferMeta)"
-            Path[path: string - 资源路径]
-            Sections[sections: BufferSection[] - 数据段]
-            BufType[type: 'buffers' - 资源类型]
+            Path["path: string - 资源路径"]
+            Sections["sections: BufferSection[] - 数据段"]
+            BufType["type: 'buffers' - 资源类型"]
         end
         
         subgraph "LOD 资源 (LODMeta)"
-            LODType[type: 'lod' - LOD类型]
-            Levels[levels: BufferMeta[] - LOD层级]
-            MinDist[minDistance?: number - 最小距离]
-            MaxDist[maxDistance?: number - 最大距离]
+            LODType["type: 'lod' - LOD类型"]
+            Levels["levels: BufferMeta[] - LOD层级"]
+            MinDist["minDistance?: number - 最小距离"]
+            MaxDist["maxDistance?: number - 最大距离"]
         end
         
         subgraph "缓冲区段 (BufferSection)"
-            DType[dType: DataType - 数据类型]
-            Length[length: number - 数据长度]
-            Offset[offset: number - 偏移量]
-            Name[name?: string - 段名称]
-            Dimension[dimension?: number - 维度]
+            DType["dType: DataType - 数据类型"]
+            Length["length: number - 数据长度"]
+            Offset["offset: number - 偏移量"]
+            Name["name?: string - 段名称"]
+            Dimension["dimension?: number - 维度"]
         end
     end
     
@@ -415,25 +415,25 @@ sequenceDiagram
 ```mermaid
 graph TB
     subgraph "信号驱动的模型系统"
-        MOS[ManifestObjectSignal]
+        MOS["ManifestObjectSignal"]
         
         subgraph "可观察模型类型"
-            Readonly[ReadonlyManifestObjectSignal<br/>只读信号]
-            Draft[DraftableModel<br/>可编辑草稿]
-            Computed[ComputedSignal<br/>计算信号]
+            Readonly["ReadonlyManifestObjectSignal<br/>只读信号"]
+            Draft["DraftableModel<br/>可编辑草稿"]
+            Computed["ComputedSignal<br/>计算信号"]
         end
         
         subgraph "信号操作"
-            Get[get() - 获取当前值]
-            Set[set() - 设置新值]
-            Update[update() - 更新属性]
-            Effect[effect() - 副作用]
+            Get["get() - 获取当前值"]
+            Set["set() - 设置新值"]
+            Update["update() - 更新属性"]
+            Effect["effect() - 副作用"]
         end
         
         subgraph "生命周期管理"
-            Create[创建信号]
-            Subscribe[订阅变化]
-            Dispose[销毁清理]
+            Create["创建信号"]
+            Subscribe["订阅变化"]
+            Dispose["销毁清理"]
         end
     end
     
@@ -447,7 +447,9 @@ graph TB
     Draft --> Update
     Computed --> Get
     
-    All --> Effect
+    Readonly --> Effect
+    Draft --> Effect
+    Computed --> Effect
     
     MOS --> Create
     MOS --> Subscribe
@@ -485,27 +487,27 @@ stateDiagram-v2
 ```mermaid
 graph LR
     subgraph "类型验证流程"
-        JSON[JSON Data] --> Codec[io-ts Codec]
-        Codec --> Decode[decode()]
-        Decode --> Result{验证结果}
+        JSON["JSON Data"] --> Codec["io-ts Codec"]
+        Codec --> Decode["decode()"]
+        Decode --> Result{"验证结果"}
         
-        Result -->|成功| Right[Right<Model>]
-        Result -->|失败| Left[Left<Errors>]
+        Result -->|成功| Right["Right<Model>"]
+        Result -->|失败| Left["Left<Errors>"]
         
-        Right --> TypeSafe[类型安全的模型]
-        Left --> ErrorHandle[错误处理]
+        Right --> TypeSafe["类型安全的模型"]
+        Left --> ErrorHandle["错误处理"]
     end
     
     subgraph "编解码器注册"
-        Register[registerCodecByType()] --> Registry[Codec Registry]
-        Registry --> Lookup[codecByType()]
+        Register["registerCodecByType()"] --> Registry["Codec Registry"]
+        Registry --> Lookup["codecByType()"]
         Lookup --> Codec
     end
     
     subgraph "类型定义"
-        Props[Properties Codec] --> Model[Model Codec]
-        Attr[Attributions Codec] --> Model
-        Res[Resources Codec] --> Model
+        Props["Properties Codec"] --> Model["Model Codec"]
+        Attr["Attributions Codec"] --> Model
+        Res["Resources Codec"] --> Model
         Model --> Register
     end
 ```

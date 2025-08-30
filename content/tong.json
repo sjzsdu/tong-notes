@@ -1,0 +1,30 @@
+{
+  "mcpServers": {},
+  "masterLLM": {
+    "type": "qwen",
+    "params": {}
+  },
+  "embeddingLLM": {
+    "type": "ollama",
+    "params": {}
+  },
+  "rag": {
+    "storage": {
+      "url": "http://localhost:6333",
+      "collection": "tong_rag"
+    },
+    "splitter": {
+      "chunkSize": 1000,
+      "chunkOverlap": 200
+    },
+    "retriever": {
+      "topK": 4
+    },
+    "session": {
+      "stream": true
+    },
+    "sync": {
+      "syncIntervalSec": 300
+    }
+  }
+}

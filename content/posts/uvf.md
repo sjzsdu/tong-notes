@@ -15,6 +15,9 @@
 #### **[Rendering 渲染系统](rendering)**
 深度剖析 UVF 的高度模块化 3D 渲染架构，基于 Three.js 构建，提供从数据模型到最终渲染输出的完整渲染管道。文档详细介绍了 ThreeViewer 渲染视图容器、RendererAdapter 渲染适配器、SceneAdapter 场景适配器、MaterialController 材质控制器等核心组件，以及它们如何采用适配器模式、工厂模式和响应式编程实现高性能实时 3D 渲染。
 
+#### **[ThreeViewer 架构分析](viewer)**
+深入剖析 UVF 的核心渲染组件 ThreeViewer 的架构设计和实现原理。通过详细的类图、流程图和思维导图，全面展示 ThreeViewer 如何协调多个控制器和适配器形成完整的 3D 可视化系统。文档详细分析了 ThreeViewer 的基本架构、核心组件关系、数据流向、交互模型和功能模块，揭示了其如何实现高效的场景管理、对象渲染和用户交互。
+
 #### **[项目结构概览](project)**
 UVF 项目的整体架构设计和组织方式深度分析。介绍了这个专为 Web 端 3D 可视化设计的统一可视化框架的分层架构模式，包括 Controllers Layer（业务控制层）、Services Layer（服务层）、Rendering Layer（渲染层）、Loaders Layer（数据加载层）等。详细解析了响应式信号系统的设计理念和数据流处理机制。
 

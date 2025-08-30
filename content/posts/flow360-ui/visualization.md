@@ -395,10 +395,157 @@ this.renderer = new THREE.WebGLRenderer({
 
 渲染流程总结：DOM容器创建 → ThreeViewer初始化 → 附加到目标元素 → WebGL渲染到Canvas → 组件显示在UI中
 
+## 场数据控制器分析
+
+在 Flow360 的可视化服务中，场数据（Field）的控制和管理是通过两个关键控制器实现的：`FieldController` 和 `FieldsController`。这两个控制器位于 `/projects/flow360/src/app/services/visualization/controllers/` 目录下，负责处理 CFD 数据的场数据可视化和交互。
+
+### FieldController 控制器
+
+`FieldController` 是单个场数据实例的控制器，负责管理和操作单个对象实例的场数据可视化。它封装了底层 UVF (Universal Visualization Framework) 的 `UvfFieldController`，提供了更高级的接口和功能。
+
+#### 核心功能
+
+1. **场数据选择与切换**
+   - 通过 `setFieldName` 方法选择要显示的场数据（如压力、速度等）
+   - 支持向量场的分量选择（X、Y、Z 分量）
+   - 提供 `fieldNames` 信号获取可用场数据列表
+
+2. **数据范围控制**
+   - 通过 `setMinMax` 方法设置场数据的显示范围
+   - 支持 `resetMinMax` 方法重置为默认范围
+   - 提供 `minMaxValues` 和 `minMaxScalar` 信号获取当前范围
+
+3. **对数比例控制**
+   - 通过 `setLogScale` 方法切换线性/对数比例显示
+   - 自动处理对数比例下的负值和零值问题
+   - 提供 `isLogScale` 信号获取当前比例状态
+
+4. **颜色映射控制**
+   - 通过 `setTheme` 方法设置颜色映射方案
+   - 提供 `theme` 信号获取当前颜色映射
+
+5. **等值线/等值面控制**
+   - 通过 `setContourSteps` 设置等值线/面的数量
+   - 通过 `setContourLineType` 设置等值线类型
+   - 通过 `setContourSurfaceColorType` 设置等值面颜色类型
+   - 通过 `setContourLineColor` 设置等值线颜色
+
+6. **裁剪控制**
+   - 通过 `setClipType` 设置裁剪类型（Above/Below/Disable）
+   - 通过 `setClipValue` 设置裁剪值
+   - 通过 `setClipAreaType` 设置裁剪区域类型
+   - 通过 `setClipColor` 设置裁剪区域颜色
+
+7. **流线可视化**
+   - 通过 `setLIC` 方法控制 LIC (Line Integral Convolution) 效果
+   - 通过 `setTubeWidthConvert` 设置流线管宽度
+   - 通过 `setStreamlineDirection` 设置流线方向
+
+8. **状态恢复**
+   - 通过 `restoreSetting` 方法从缓存数据恢复场数据设置
+
+#### 实现细节
+
+`FieldController` 大量使用了 Angular 的信号 API 进行状态管理，将底层 UVF 控制器的状态转换为 Angular 信号，实现了响应式的状态更新。同时，它还处理了单位转换、性能优化（如使用 throttle 限制更新频率）等细节。
+
+```typescript
+// 使用 Angular 信号 API 包装底层控制器状态
+this.fieldNames = toAngularSignal(
+  uvfComputed(() => {
+    const names = new Set<string>();
+    this.controller.fieldNames.forEach(fieldName => {
+      names.add(fieldName);
+      const fieldComponnetsNames = this.getFieldComponentsNames(fieldName);
+      fieldComponnetsNames.forEach(name => {
+        names.add(name);
+      });
+    });
+    return Array.from(names.values()).sort((a, b) => a.localeCompare(b));
+  }),
+  { injector: this.injector }
+);
+```
+
+### FieldsController 控制器
+
+`FieldsController` 是多个场数据实例的集合控制器，负责管理和协调多个 `FieldController` 实例。它主要用于处理多个对象同时显示场数据的情况，确保它们使用一致的设置和范围。
+
+#### 核心功能
+
+1. **控制器集合管理**
+   - 通过 `initialize` 方法初始化多个 `FieldController` 实例
+   - 提供 `controllers` 信号存储和管理所有控制器实例
+   - 支持动态添加和移除控制器
+
+2. **全局状态聚合**
+   - 聚合所有控制器的场数据名称列表
+   - 计算全局的数据范围（最小值和最大值）
+   - 聚合所有控制器的单位映射
+
+3. **批量操作**
+   - 通过 `setFieldName` 方法同时设置所有控制器的场数据
+   - 通过 `setTheme` 方法同时设置所有控制器的颜色映射
+   - 通过 `setLogScale` 方法同时设置所有控制器的比例类型
+   - 通过 `setMinMax` 方法同时设置所有控制器的数据范围
+   - 提供其他批量设置方法（等值线、裁剪、流线等）
+
+4. **状态恢复与清理**
+   - 通过 `restoreSetting` 方法恢复所有控制器的设置
+   - 通过 `dispose` 方法清理所有控制器资源
+
+#### 实现细节
+
+`FieldsController` 使用计算属性（computed）从多个控制器中聚合状态，并提供统一的接口进行批量操作。它还处理了控制器的异步初始化和可见性变化。
+
+```typescript
+// 聚合多个控制器的数据范围
+minMaxValues: Signal<[number, number]> = computed(() => {
+  let minMaxValues: [number, number] = [Infinity, -Infinity];
+
+  for (const controller of this.controllers()) {
+    const [min, max] = controller.minMaxValues();
+
+    minMaxValues = [Math.min(minMaxValues[0], min), Math.max(minMaxValues[1], max)];
+  }
+
+  return minMaxValues;
+});
+```
+
+### 控制器之间的关系
+
+`FieldController` 和 `FieldsController` 之间是一对多的关系：
+
+- `FieldController` 负责单个对象实例的场数据控制
+- `FieldsController` 管理多个 `FieldController` 实例，提供统一的接口
+
+这种设计模式允许系统既能精细控制单个对象的场数据显示，又能在需要时对多个对象进行一致的批量操作。例如，用户可以选择多个对象，然后通过 `FieldsController` 同时调整它们的颜色映射或数据范围。
+
+### 与 VisualizationService 的集成
+
+这两个控制器与 `VisualizationService` 紧密集成：
+
+1. `VisualizationService` 负责创建和管理这些控制器
+2. 控制器通过 `VisualizationService` 获取对象实例和模型信息
+3. 控制器调用 `VisualizationService` 的方法（如 `showLIC`、`clearLIC`）来实现特定的可视化效果
+
+```typescript
+// FieldController 构造函数中获取底层控制器
+constructor(
+  private visualizationService: VisualizationService,
+  instanceId: ObjectInstanceId,
+  options?: FieldControllerOptions
+) {
+  // ...
+  this.controller = this.visualizationService.getFieldController(instanceId);
+  // ...
+}
+```
+
 ## 总结
 
 `VisualizationService` 是 Flow360 应用的核心可视化引擎，提供了强大的 3D 渲染、交互和模型管理能力。通过与 Three.js 的集成，以及精心设计的 API，该服务使应用能够呈现复杂的 CFD (计算流体动力学) 数据可视化，并支持用户进行直观的交互操作。
 
-服务实现了多种专门针对 CFD 数据的可视化功能，包括流线可视化、特定区域聚焦、通用体积数据处理等，这些功能使 Flow360 能够满足专业 CFD 分析的需求。
+服务实现了多种专门针对 CFD 数据的可视化功能，包括流线可视化、特定区域聚焦、通用体积数据处理等，这些功能使 Flow360 能够满足专业 CFD 分析的需求。其中，`FieldController` 和 `FieldsController` 作为专门的场数据控制器，提供了丰富的场数据可视化控制功能，使用户能够灵活地调整和分析 CFD 计算结果。
 
 服务的设计遵循了响应式编程模式，大量使用信号机制进行状态管理，同时通过缓存、批处理和 LOD 等技术确保了在处理大型 3D 模型时的性能表现。通过与 AWS 服务的集成，该服务还能够高效地处理云端存储的大型 CFD 数据集。

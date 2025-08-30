@@ -369,3 +369,204 @@ UVF展现了现代Web 3D框架的优秀架构设计：
 - **高性能的渲染管线**满足复杂场景需求
 
 这种架构设计使得UVF既能处理简单的3D可视化需求，也能支撑大规模工业级应用的复杂渲染场景。
+
+## 类型ID系统分析
+
+UVF框架中定义了一套完整的标识符(ID)系统来管理3D场景中的各种对象和实例，形成了清晰的层次结构。
+
+### ID类型层次结构
+
+```mermaid
+graph TB
+    subgraph "Base ID Types"
+        MOId[ManifestObjectId<br/>基础对象ID<br/>UUID v5]
+        OIId[ObjectInstanceId<br/>实例ID<br/>UUID v5]
+    end
+    
+    subgraph "Geometry Hierarchy"
+        PGId[PackedGeometryId<br/>打包几何体ID]
+        SGId[SolidGeometryId<br/>实体几何ID]
+        SQId[SurfaceQuiltId<br/>表面拼接ID]
+        PMId[PackedMeshId<br/>打包网格ID]
+    end
+    
+    subgraph "CAD Components"
+        FId[FaceId<br/>面ID]
+        EId[EdgeId<br/>边ID]
+        VId[VertexId<br/>顶点ID]
+        GGId[GeometryGroupId<br/>几何组ID]
+    end
+    
+    subgraph "Rendering Types"
+        TPGId[ThreePackedGeometryGroup<br/>Three.js打包几何组]
+        MId[MorphingEntityId<br/>变形实体ID = number]
+        BAId[BufferAttributeId<br/>缓冲区属性标识]
+    end
+    
+    subgraph "Instance Management"
+        IIS[InstanceIdService<br/>实例ID服务]
+        Cache[InstanceCache<br/>实例缓存]
+    end
+    
+    MOId --> OIId
+    MOId --> PGId
+    PGId --> SGId
+    PGId --> SQId  
+    PGId --> PMId
+    
+    SGId --> FId
+    SGId --> EId
+    SQId --> FId
+    SQId --> EId
+    FId --> VId
+    EId --> VId
+    
+    PGId --> TPGId
+    OIId --> IIS
+    IIS --> Cache
+    
+    style MOId fill:#e3f2fd
+    style OIId fill:#f3e5f5
+    style PGId fill:#e8f5e8
+    style SGId fill:#fff3e0
+    style SQId fill:#fff3e0
+    style PMId fill:#fff3e0
+    style FId fill:#fce4ec
+    style EId fill:#fce4ec
+    style VId fill:#fce4ec
+    style GGId fill:#f1f8e9
+    style TPGId fill:#f5f5f5
+    style MId fill:#f5f5f5
+    style IIS fill:#e1f5fe
+    style Cache fill:#e1f5fe
+```
+
+### ID类型关系映射
+
+```mermaid
+graph LR
+    subgraph "Core ID Types"
+        A[ManifestObjectId]
+        B[ObjectInstanceId]
+    end
+    
+    subgraph "Packed Geometry Union"
+        C[PackedGeometryId]
+        D[SolidGeometryId]
+        E[SurfaceQuiltId]
+        F[PackedMeshId]
+    end
+    
+    subgraph "CAD Entity IDs"
+        G[FaceId]
+        H[EdgeId]
+        I[VertexId]
+        J[GeometryGroupId]
+    end
+    
+    subgraph "Service Layer"
+        K[InstanceIdService]
+        L[UUID v5 Generation]
+        M[Parent-Child Mapping]
+    end
+    
+    A --> B
+    A --> C
+    C --> D
+    C --> E
+    C --> F
+    D --> G
+    D --> H
+    E --> G
+    E --> H
+    G --> I
+    H --> I
+    
+    B --> K
+    K --> L
+    K --> M
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fff3e0
+    style F fill:#fff3e0
+    style G fill:#fce4ec
+    style H fill:#fce4ec
+    style I fill:#fce4ec
+    style J fill:#f1f8e9
+    style K fill:#e1f5fe
+    style L fill:#e1f5fe
+    style M fill:#e1f5fe
+```
+
+### 核心ID类型说明
+
+1. **ManifestObjectId**: 
+   - 基础对象标识符，使用UUID v5生成
+   - 所有manifest对象的根ID类型
+
+2. **ObjectInstanceId**: 
+   - 对象实例标识符，也使用UUID v5
+   - 通过InstanceIdService管理父子关系
+
+3. **PackedGeometryId**: 
+   - 联合类型：`SolidGeometryId | SurfaceQuiltId | PackedMeshId`
+   - 用于标识打包的几何体数据
+
+4. **CAD实体ID**:
+   - **FaceId**: CAD面的标识符
+   - **EdgeId**: CAD边的标识符  
+   - **VertexId**: CAD顶点的标识符
+   - **GeometryGroupId**: 几何组标识符
+
+5. **渲染特定ID**:
+   - **ThreePackedGeometryGroup**: Three.js打包几何组
+   - **MorphingEntityId**: 变形实体ID (number类型)
+   - 各种BufferAttribute相关的标识符
+
+### InstanceIdService服务
+
+```mermaid
+graph TB
+    subgraph "InstanceIdService"
+        A[get方法<br/>获取实例ID]
+        B[UUID v5生成<br/>基于父ID+对象ID]
+        C[生命周期管理<br/>alive状态跟踪]
+        D[层次关系<br/>parent-child映射]
+    end
+    
+    subgraph "应用场景"
+        E[几何体实例化<br/>GeometryController]
+        F[渲染对象管理<br/>RendererAdapter]
+        G[交互选择<br/>IntersectionPicker]
+        H[场景图构建<br/>ThreeViewer]
+    end
+    
+    A --> B
+    B --> C
+    C --> D
+    
+    E --> A
+    F --> A
+    G --> A
+    H --> A
+    
+    style A fill:#e3f2fd
+    style B fill:#f3e5f5
+    style C fill:#e8f5e8
+    style D fill:#fff3e0
+    style E fill:#fce4ec
+    style F fill:#fce4ec
+    style G fill:#fce4ec
+    style H fill:#fce4ec
+```
+
+这套ID系统的设计体现了UVF框架的以下特点：
+
+1. **类型安全**: 使用TypeScript严格类型定义确保ID使用的正确性
+2. **层次清晰**: 从基础对象到具体几何实体的清晰层次结构
+3. **实例管理**: 通过InstanceIdService实现复杂的实例化和生命周期管理
+4. **渲染解耦**: 不同渲染后端可以有自己的ID扩展(如Three.js相关ID)
+5. **高性能**: UUID v5确保全局唯一性的同时保持高性能

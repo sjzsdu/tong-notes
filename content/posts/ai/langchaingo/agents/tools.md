@@ -95,41 +95,41 @@ type Tool interface {
 
 ```mermaid
 graph TB
-    subgraph "AbstractLayer"
-        TI[Tool Interface<br/>• Name() string<br/>• Description() string<br/>• Call(ctx, input) (string, error)]
+    subgraph AbstractLayer
+    TI[Tool Interface]
     end
     
-    subgraph "ImplementationLayer"
-        subgraph "BuiltinTools"
-            CALC[Calculator<br/>Starlark Engine]
-            SCRP[Scraper<br/>HTML Parser]
+    subgraph ImplementationLayer
+        subgraph BuiltinTools
+            CALC[Calculator]
+            SCRP[Scraper]
         end
         
-        subgraph "SearchTools"
-            DDG[DuckDuckGo<br/>Web Search]
-            SERP[SerpAPI<br/>Google Search]
-            WIKI[Wikipedia<br/>Knowledge Base]
+        subgraph SearchTools
+            DDG[DuckDuckGo]
+            SERP[SerpAPI]
+            WIKI[Wikipedia]
         end
         
-        subgraph "DatabaseTools"
-            SQL[SQL Database<br/>Multi-Engine]
-            PG[PostgreSQL<br/>Engine]
-            MY[MySQL<br/>Engine]
-            LITE[SQLite<br/>Engine]
+        subgraph DatabaseTools
+            SQL[SQL Database]
+            PG[PostgreSQL]
+            MY[MySQL]
+            LITE[SQLite]
         end
         
-        subgraph "ExternalServices"
-            ZAP[Zapier NLA<br/>Automation]
-            PERP[Perplexity<br/>AI Search]
-            META[Metaphor<br/>Semantic Search]
+        subgraph ExternalServices
+            ZAP[Zapier NLA]
+            PERP[Perplexity]
+            META[Metaphor]
         end
     end
     
-    subgraph "IntegrationLayer"
-        subgraph "AgentTypes"
-            OAI[OpenAI Functions Agent<br/>• Tool calling<br/>• Structured parameters]
-            MRKL[MRKL Agent<br/>• ReAct pattern<br/>• Reasoning loop]
-            CONV[Conversational Agent<br/>• Multi-turn<br/>• Context aware]
+    subgraph IntegrationLayer
+        subgraph AgentTypes
+            OAI[OpenAI Functions Agent]
+            MRKL[MRKL Agent]
+            CONV[Conversational Agent]
         end
     end
     

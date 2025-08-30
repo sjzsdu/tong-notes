@@ -1,342 +1,607 @@
----
-title: "Model Context Protocol (MCP) 技术解析"
-date: ""
-lastmod: "2023-10-25"
-draft: false
-author: "孙巨中"
-description: "深入解析基于JSON-RPC 2.0的AI集成协议MCP，包括架构设计、核心组件和关键技术实现"
-keywords: ["MCP协议", "JSON-RPC", "AI集成", "三层架构", "能力协商", "安全机制", "上下文传递", "客户端-主机-服务器", "模块化设计", "渐进增强"]
-tags: ["协议规范", "架构设计", "AI集成", "JSON-RPC", "安全机制", "能力协商", "上下文管理", "模块化", "技术解析", "开源协议"]
-categories: ["技术解析", "协议规范", "人工智能"]
-weight: 8500
-showInHome: true
-license: "CC BY-NC-ND"
-featured_image: ""
-summary: "Model Context Protocol (MCP)是一种创新的AI集成协议，采用客户端-主机-服务器三层架构，通过增强版JSON-RPC 2.0实现上下文传递与协调，具有模块化设计、能力协商机制和安全边界控制等核心特性。"
----
+# MCP-Go 文档总结
 
-# Model Context Protocol (MCP) 技术解析
+## 概述
 
-## 一、协议概述
+MCP-Go 是 Model Context Protocol (MCP) 的 Go 语言实现，为 AI 应用程序与外部数据源和工具之间提供安全、可控的连接。它是一个开放标准，使大型语言模型 (LLM) 能够以标准化的方式访问和与外部系统交互，同时保持安全性和用户控制。
 
-### 1.1 基本定义
-Model Context Protocol (MCP) 是一种基于JSON-RPC 2.0的AI集成协议，通过标准化的消息格式实现客户端、主机和服务器之间的上下文传递与协调。
+## 核心特性
 
-### 1.2 核心组件
-* **基础协议**：核心JSON-RPC消息类型
-* **生命周期管理**：连接初始化、能力协商和会话控制
-* **服务器功能**：服务器暴露的资源、提示词和工具
-* **客户端功能**：客户端提供的采样和根目录列表
-* **工具集**：跨领域关注点如日志记录和参数补全
+- **高性能**: 基于 Go 的高效实现，最小化开销
+- **简单易用**: 清晰直观的 API，最少的样板代码
+- **功能完整**: 完全支持 MCP 规范，包括工具、资源和提示
+- **类型安全**: 利用 Go 的类型系统构建健壮的 MCP 服务器
+- **多种传输方式**: 支持 Stdio、StreamableHTTP、Server-Sent Events 和 In-Process
 
-### 1.3 版本信息
-<信息>**当前版本**：2025-03-26</信息>
-<信息>**最低兼容版本**：2024-Q3</信息>
+## 传输方式架构图
 
-## 二、架构设计
+### 1. Stdio 传输方式
 
-### 2.1 架构概览
-```mermaid
-graph TD
-    A[Client] --> B[Host]
-    B --> C[Server1]
-    B --> D[Server2]
-    style A fill:#f9f,stroke:#333
-    style B fill:#bbf,stroke:#333
-    style C fill:#f96,stroke:#333
-    style D fill:#f96,stroke:#333
-```
-
-MCP采用创新的**客户端-主机-服务器**三层架构，主要特点包括：
-- **多客户端隔离**：单个主机进程可管理多个独立客户端实例
-- **安全边界**：严格隔离不同服务器的访问权限
-- **上下文交换**：专注于客户端与服务器间的上下文传递
-
-### 2.2 核心组件
-### 2.3 演进路线
-* **2024-Q3**：初始规范发布，支持基础AI集成
-* **2025-Q1**：新增工具链扩展和资源订阅机制
-* **2025-Q3**：计划引入联邦学习支持
-* **路线图特点**：
-  - 保持向后兼容性
-  - 每季度功能增量
-  - 社区驱动演进
-
-* **2024-Q3**：初始规范发布，支持基础AI集成
-* **2025-Q1**：新增工具链扩展和资源订阅机制
-* **2025-Q3**：计划引入联邦学习支持
-* **路线图特点**：
-  - 保持向后兼容性
-  - 每季度功能增量
-  - 社区驱动演进
-MCP采用创新的**客户端-主机-服务器**三层架构，通过增强版JSON-RPC 2.0协议实现有状态会话管理。设计特点包括：
-- **多客户端隔离**：单个主机进程可管理多个独立客户端实例
-- **安全边界**：严格隔离不同服务器的访问权限
-- **上下文交换**：专注于客户端与服务器间的上下文传递和采样协调
-
-## 三、核心组件详解
-
-### 3.1 主机（Host）
-- 作为中央协调器，负责：
-  - 客户端生命周期管理
-  - 安全策略强制执行
-  - 跨客户端上下文聚合
-  - AI集成协调（如LLM采样）
-
-### 3.2 客户端（Client）
-- 每个客户端具有：
-  - 独立服务器连接（1:1关系）
-  - 双向消息路由能力
-  - 订阅/通知管理
-  - 协议协商功能
-
-### 3.3 服务器（Server）
-- 提供专业化服务：
-  - 通过MCP原语暴露资源/工具
-  - 支持本地或远程部署
-  - 需遵守主机设定的安全约束
-#### 主机（Host）
-- 作为中央协调器，负责：
-  - 客户端生命周期管理
-  - 安全策略强制执行
-  - 跨客户端上下文聚合
-  - AI集成协调（如LLM采样）
-
-#### 客户端（Client）
-- 每个客户端具有：
-  - 独立服务器连接（1:1关系）
-  - 双向消息路由能力
-  - 订阅/通知管理
-  - 协议协商功能
-
-#### 服务器（Server）
-- 提供专业化服务：
-  - 通过MCP原语暴露资源/工具
-  - 支持本地或远程部署
-  - 需遵守主机设定的安全约束
-
-## 四、设计原则
-
-| 原则 | 实现方式 | 技术价值 |
-|------|----------|----------|
-| 易构建性 | 主机承担复杂协调逻辑 | 降低服务器实现复杂度 |
-| 高组合性 | 模块化设计 | 支持多服务器无缝协作 |
-| 隐私保护 | 对话历史仅存主机端 | 符合GDPR等合规要求 |
-| 渐进增强 | 通过能力协商实现 | 支持平滑升级 |
-| 原则 | 实现方式 |
-|------|----------|
-| 易构建性 | 主机承担复杂协调逻辑，服务器只需实现单一功能 |
-| 高组合性 | 模块化设计支持多服务器无缝协作 |
-| 隐私保护 | 对话历史仅存主机端，服务器只能获取必要上下文 |
-| 渐进增强 | 通过能力协商实现功能扩展 |
-
-## 五、关键技术实现
-
-### 5.1 能力协商机制
 ```mermaid
 sequenceDiagram
-    participant H as Host
-    participant C as Client
-    participant S as Server
-    H->>C: 初始化
-    C->>S: 能力声明
-    S-->>C: 支持能力列表
-    Note over C,S: 基于协商结果的会话
+    participant C as MCP Client
+    participant T as Stdio Transport
+    participant S as MCP Server
+    
+    Note over C,S: 启动阶段
+    C->>T: 启动进程 (spawn process)
+    T->>S: 创建 stdin/stdout 连接
+    
+    Note over C,S: 初始化阶段
+    C->>T: Initialize Request
+    T->>S: 转发请求 (via stdin)
+    S->>T: Initialize Response
+    T->>C: 转发响应 (via stdout)
+    
+    Note over C,S: 工具调用阶段
+    C->>T: CallTool Request
+    T->>S: JSON over stdin
+    S->>S: 处理工具调用
+    S->>T: CallTool Response
+    T->>C: JSON over stdout
+    
+    Note over C,S: 清理阶段
+    C->>T: 关闭连接
+    T->>S: 终止进程
 ```
 
-**核心流程**：
-1. 主机初始化客户端
-2. 客户端向服务器声明能力需求
-3. 服务器返回支持能力列表
-4. 建立基于协商结果的会话
+### 2. StreamableHTTP 传输方式
 
-**技术特点**：
-- 动态能力发现
-- 功能按需启用
-- 强扩展性设计
 ```mermaid
 sequenceDiagram
-    participant H as Host
-    participant C as Client
-    participant S as Server
-    H->>C: 初始化
-    C->>S: 能力声明
-    S-->>C: 支持能力列表
-    Note over C,S: 基于协商结果的会话
+    participant C as MCP Client
+    participant H as HTTP Transport
+    participant S as MCP Server
+    
+    Note over C,S: 连接阶段
+    C->>H: HTTP Connection
+    H->>S: 建立会话
+    
+    Note over C,S: 初始化阶段
+    C->>H: POST /mcp (Initialize)
+    H->>S: 处理初始化请求
+    S->>H: Initialize Response
+    H->>C: HTTP Response (JSON)
+    
+    Note over C,S: 工具调用阶段
+    C->>H: POST /mcp (CallTool)
+    H->>S: 处理工具调用
+    S->>S: 执行工具逻辑
+    S->>H: CallTool Response
+    H->>C: HTTP Response (JSON)
+    
+    Note over C,S: 资源获取阶段
+    C->>H: POST /mcp (ReadResource)
+    H->>S: 处理资源请求
+    S->>S: 获取资源数据
+    S->>H: Resource Response
+    H->>C: HTTP Response (JSON)
 ```
-- **动态能力发现**：双方在会话初始化时交换能力声明
-- **功能按需启用**：如工具调用、资源订阅等需显式声明
-- **扩展性强**：支持后续通过协议扩展新增能力
 
-### 5.2 典型交互流程
+### 3. Server-Sent Events (SSE) 传输方式
 
-**三种基本模式**：
-1. **客户端发起**：
-   ```
-   用户操作 → 客户端请求 → 服务器响应
-   ```
-2. **服务器发起**：
-   ```
-   采样请求 → AI处理 → 返回结果
-   ```
-3. **通知机制**：
-   ```
-   资源变更 → 订阅通道 → 实时推送
-   ```
-1. **客户端发起**：用户操作→客户端请求→服务器响应
-2. **服务器发起**：采样请求→AI处理→返回结果
-3. **通知机制**：资源变更时通过订阅通道实时推送
+```mermaid
+sequenceDiagram
+    participant C as MCP Client
+    participant SSE as SSE Transport
+    participant S as MCP Server
+    
+    Note over C,S: 连接阶段
+    C->>SSE: GET /sse (建立 SSE 连接)
+    SSE->>S: 创建会话
+    SSE->>C: SSE Connection Established
+    
+    Note over C,S: 初始化阶段
+    C->>SSE: POST /sse (Initialize)
+    SSE->>S: 处理初始化
+    S->>SSE: Initialize Response
+    SSE->>C: SSE Event (data: JSON)
+    
+    Note over C,S: 实时通信阶段
+    C->>SSE: POST /sse (Request)
+    SSE->>S: 处理请求
+    S->>SSE: Response
+    SSE->>C: SSE Event (data: JSON)
+    
+    Note over C,S: 服务器推送
+    S->>SSE: 主动推送更新
+    SSE->>C: SSE Event (notification)
+    
+    Note over C,S: 断开连接
+    C->>SSE: 关闭 SSE 连接
+    SSE->>S: 清理会话
+```
 
-## 六、应用场景与价值
+### 4. In-Process 传输方式
 
-### 6.1 架构优势
-- **安全性**：通过主机强制实施安全边界
-- **灵活性**：支持本地/远程混合部署
-- **可扩展性**：能力协商机制支持渐进增强
-- **解耦设计**：各组件可独立演进
+```mermaid
+sequenceDiagram
+    participant C as MCP Client
+    participant IP as In-Process Transport
+    participant S as MCP Server
+    
+    Note over C,S: 初始化阶段
+    C->>IP: 创建 In-Process 客户端
+    IP->>S: 直接引用服务器实例
+    
+    Note over C,S: 直接调用阶段
+    C->>IP: Initialize Request
+    IP->>S: 直接方法调用 (无序列化)
+    S->>IP: Initialize Response
+    IP->>C: 直接返回对象
+    
+    Note over C,S: 工具调用阶段
+    C->>IP: CallTool Request
+    IP->>S: 直接调用工具处理器
+    S->>S: 执行工具逻辑
+    S->>IP: 返回结果对象
+    IP->>C: 直接返回结果
+    
+    Note over C,S: 无需清理
+    Note over C,S: 共享内存空间，无网络开销
+```
 
-### 6.2 典型应用场景
-* **智能开发环境**：多AI工具协同的IDE插件
-* **企业AI中台**：需要严格权限控制的内部系统
-* **边缘计算**：分布式AI资源调度
-* **研究平台**：可复现的AI实验环境
-- **安全性**：通过主机强制实施安全边界
-- **灵活性**：支持本地/远程混合部署模式
-- **可扩展性**：能力协商机制支持渐进式功能增强
-- **解耦设计**：客户端与服务器可独立演进
+### 传输方式对比图
 
-该架构特别适合以下场景：
-* **智能开发环境**：多AI工具协同的IDE插件
-* **企业AI中台**：需要严格权限控制的内部系统
-* **边缘计算**：分布式AI资源调度
-* **研究平台**：可复现的AI实验环境
-## 七、协议规范
+```mermaid
+graph TB
+    subgraph "传输方式特性对比"
+        A[Stdio] --> A1[本地进程]
+        A --> A2[单客户端]
+        A --> A3[最简单]
+        A --> A4[最安全]
+        
+        B[StreamableHTTP] --> B1[网络协议]
+        B --> B2[多客户端]
+        B --> B3[REST风格]
+        B --> B4[可缓存]
+        
+        C[SSE] --> C1[实时流]
+        C --> C2[Web友好]
+        C --> C3[服务器推送]
+        C --> C4[单向流]
+        
+        D[In-Process] --> D1[同进程]
+        D --> D2[零开销]
+        D --> D3[直接调用]
+        D --> D4[最快速度]
+    end
+    
+    subgraph "适用场景"
+        A1 --> E1[CLI工具]
+        B1 --> E2[Web服务]
+        C1 --> E3[实时应用]
+        D1 --> E4[嵌入式系统]
+    end
+```
 
-### 7.1 消息格式
+## 安装
 
-#### 请求格式
-```typescript
-{
-  jsonrpc: "2.0";
-  id: string | number;  // 禁止null
-  method: string;
-  params?: {
-    [key: string]: unknown;
-  };
+```bash
+go get github.com/mark3labs/mcp-go
+```
+
+## 核心概念
+
+### 1. 资源 (Resources)
+
+资源类似于 GET 端点，以只读方式向 LLM 公开数据。
+
+**主要特征**:
+- **只读**: LLM 可以获取但不能修改资源
+- **基于 URI**: 每个资源都有唯一标识符
+- **类型化内容**: 资源指定其 MIME 类型（文本、JSON、二进制等）
+- **动态或静态**: 可以是预定义的或按需生成的
+
+**示例用例**:
+- 文件系统访问 (`file:///path/to/document.txt`)
+- 数据库记录 (`db://users/123`)
+- API 数据 (`api://weather/current`)
+- 配置文件 (`config://app.json`)
+
+```go
+// 静态资源
+resource := mcp.NewResource(
+    "docs://readme",
+    "Project README",
+    mcp.WithResourceDescription("项目的主要文档"),
+    mcp.WithMIMEType("text/markdown"),
+)
+
+// 带模板的动态资源
+userResource := mcp.NewResource(
+    "users://{user_id}",
+    "User Profile",
+    mcp.WithResourceDescription("用户配置文件信息"),
+    mcp.WithMIMEType("application/json"),
+)
+```
+
+### 2. 工具 (Tools)
+
+工具类似于 POST 端点，提供 LLM 可以调用以执行操作或进行计算的功能。
+
+**主要特征**:
+- **面向操作**: 工具执行任务而不仅仅是返回数据
+- **参数化**: 接受结构化输入参数
+- **类型化模式**: 定义预期的参数类型和约束
+- **返回结果**: 向 LLM 提供结构化输出
+
+**示例用例**:
+- 计算 (`calculate`, `convert_units`)
+- 文件操作 (`create_file`, `search_files`)
+- API 调用 (`send_email`, `create_ticket`)
+- 系统命令 (`run_command`, `check_status`)
+
+```go
+// 简单计算工具
+calcTool := mcp.NewTool("calculate",
+    mcp.WithDescription("执行算术运算"),
+    mcp.WithString("operation", 
+        mcp.Required(),
+        mcp.Enum("add", "subtract", "multiply", "divide"),
+    ),
+    mcp.WithNumber("x", mcp.Required()),
+    mcp.WithNumber("y", mcp.Required()),
+)
+
+// 文件创建工具
+fileTool := mcp.NewTool("create_file",
+    mcp.WithDescription("创建包含内容的新文件"),
+    mcp.WithString("path", mcp.Required()),
+    mcp.WithString("content", mcp.Required()),
+    mcp.WithString("encoding", mcp.Default("utf-8")),
+)
+```
+
+### 3. 提示 (Prompts)
+
+提示是可重用的交互模板，帮助构建用户和 LLM 之间的对话。
+
+**主要特征**:
+- **基于模板**: 使用占位符动态内容
+- **可重用**: 可以使用不同参数多次调用
+- **结构化**: 定义清晰的输入参数和预期输出
+- **上下文感知**: 可以包含相关资源或工具建议
+
+**示例用例**:
+- 代码审查模板
+- 文档生成
+- 数据分析工作流
+- 创意写作提示
+
+```go
+// 代码审查提示
+reviewPrompt := mcp.NewPrompt("code_review",
+    mcp.WithPromptDescription("审查代码的最佳实践和问题"),
+    mcp.WithPromptArgument("code", 
+        mcp.Required(),
+        mcp.Description("要审查的代码"),
+    ),
+    mcp.WithPromptArgument("language",
+        mcp.Description("编程语言"),
+    ),
+)
+```
+
+### 4. 传输方式 (Transports)
+
+传输定义了 MCP 客户端和服务器如何通信。MCP-Go 支持多种传输方法以适应不同的部署场景。
+
+#### 传输方式实现流程
+
+```mermaid
+graph LR
+    subgraph "客户端请求流程"
+        C1[客户端发起请求] --> T1[选择传输方式]
+        T1 --> T2{传输类型}
+        
+        T2 -->|Stdio| S1[进程间通信]
+        T2 -->|HTTP| S2[HTTP请求]
+        T2 -->|SSE| S3[事件流]
+        T2 -->|In-Process| S4[直接调用]
+        
+        S1 --> R1[JSON over stdin/stdout]
+        S2 --> R2[HTTP POST/GET]
+        S3 --> R3[Server-Sent Events]
+        S4 --> R4[内存中对象传递]
+        
+        R1 --> E[服务器处理]
+        R2 --> E
+        R3 --> E
+        R4 --> E
+    end
+```
+
+#### 各传输方式详细特性
+
+**1. Stdio 传输**
+- **通信机制**: 标准输入/输出流
+- **数据格式**: JSON-RPC over stdin/stdout
+- **连接模式**: 单一进程，单一客户端
+- **适用场景**: 命令行工具、桌面应用集成
+
+```go
+// Stdio 服务器实现
+func main() {
+    s := server.NewMCPServer("Stdio Server", "1.0.0")
+    // 添加工具和资源...
+    server.ServeStdio(s) // 阻塞式运行
+}
+
+// Stdio 客户端实现
+transport := transport.NewStdio("go", nil, "run", "server/main.go")
+client := client.NewClient(transport)
+```
+
+**2. StreamableHTTP 传输**
+- **通信机制**: HTTP POST 请求
+- **数据格式**: JSON over HTTP
+- **连接模式**: 多客户端，无状态
+- **适用场景**: Web 服务、微服务架构
+
+```go
+// HTTP 服务器实现
+func main() {
+    s := server.NewMCPServer("HTTP Server", "1.0.0")
+    // 添加工具和资源...
+    httpServer := server.NewStreamableHTTPServer(s)
+    httpServer.Start(":8080") // 启动 HTTP 服务器
+}
+
+// HTTP 客户端实现
+transport, _ := transport.NewStreamableHTTP("http://localhost:8080/mcp")
+client := client.NewClient(transport)
+```
+
+**3. Server-Sent Events (SSE) 传输**
+- **通信机制**: HTTP SSE + POST 请求
+- **数据格式**: Event-Stream + JSON
+- **连接模式**: 长连接，实时推送
+- **适用场景**: 实时 Web 应用、仪表板
+
+```go
+// SSE 服务器实现
+func main() {
+    s := server.NewMCPServer("SSE Server", "1.0.0")
+    // 添加工具和资源...
+    server.ServeSSE(s, ":8080") // 启动 SSE 服务器
+}
+
+// SSE 客户端（通常是 Web 前端）
+const eventSource = new EventSource('/sse');
+eventSource.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    // 处理服务器推送的数据
+};
+```
+
+**4. In-Process 传输**
+- **通信机制**: 直接方法调用
+- **数据格式**: Go 对象（无序列化）
+- **连接模式**: 同进程内存共享
+- **适用场景**: 嵌入式系统、高性能应用
+
+```go
+// In-Process 实现
+func main() {
+    s := server.NewMCPServer("In-Process Server", "1.0.0")
+    // 添加工具和资源...
+    
+    // 创建 in-process 客户端
+    client := client.NewInProcessClient(s)
+    
+    // 直接调用，无网络开销
+    result, err := client.CallTool(ctx, request)
 }
 ```
 
-#### 响应格式
-```typescript
-{
-  jsonrpc: "2.0";
-  id: string | number;  // 必须匹配请求ID
-  result?: object;
-  error?: {
-    code: number;
-    message: string;
-    data?: unknown;
-  }
+#### 传输方式选择指南
+
+```mermaid
+flowchart TD
+    A[选择传输方式] --> B{部署环境}
+    
+    B -->|本地应用| C{客户端数量}
+    B -->|Web应用| D{实时需求}
+    B -->|嵌入式| E[In-Process]
+    
+    C -->|单客户端| F[Stdio]
+    C -->|多客户端| G[StreamableHTTP]
+    
+    D -->|需要实时推送| H[SSE]
+    D -->|标准HTTP| I[StreamableHTTP]
+    
+    F --> F1[最简单<br/>最安全<br/>适合CLI]
+    G --> G1[可扩展<br/>负载均衡<br/>适合微服务]
+    H --> H1[实时通信<br/>服务器推送<br/>适合仪表板]
+    I --> I1[标准协议<br/>易于集成<br/>适合API]
+    E --> E1[零开销<br/>最高性能<br/>适合嵌入式]
+```
+
+## 快速开始
+
+### Hello World 服务器
+
+创建一个简单的 MCP 服务器：
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+
+    "github.com/mark3labs/mcp-go/mcp"
+    "github.com/mark3labs/mcp-go/server"
+)
+
+func main() {
+    // 创建新的 MCP 服务器
+    s := server.NewMCPServer(
+        "Demo 🚀",
+        "1.0.0",
+        server.WithToolCapabilities(false),
+    )
+
+    // 添加工具
+    tool := mcp.NewTool("hello_world",
+        mcp.WithDescription("向某人问好"),
+        mcp.WithString("name",
+            mcp.Required(),
+            mcp.Description("要问候的人的姓名"),
+        ),
+    )
+
+    // 添加工具处理器
+    s.AddTool(tool, helloHandler)
+
+    // 启动 stdio 服务器
+    if err := server.ServeStdio(s); err != nil {
+        fmt.Printf("服务器错误: %v\n", err)
+    }
+}
+
+func helloHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+    name, err := request.RequireString("name")
+    if err != nil {
+        return mcp.NewToolResultError(err.Error()), nil
+    }
+
+    return mcp.NewToolResultText(fmt.Sprintf("你好, %s!", name)), nil
 }
 ```
 
-<信息>**协议版本**：2025-03-26</信息>
+### 运行服务器
 
-Model Context Protocol（MCP）由以下核心组件构成：
+1. 保存代码到文件（例如 `main.go`）
+2. 运行：
+   ```bash
+   go run main.go
+   ```
 
-* **基础协议**：核心JSON-RPC消息类型
-* **生命周期管理**：连接初始化、能力协商和会话控制
-* **服务器功能**：服务器暴露的资源、提示词和工具
-* **客户端功能**：客户端提供的采样和根目录列表
-* **工具集**：跨领域关注点如日志记录和参数补全
+### 客户端示例
 
-所有实现**必须**支持基础协议和生命周期管理组件，其他组件可根据应用需求**选择性**实现。
+创建 MCP 客户端连接到其他服务器：
 
-这种分层设计实现了关注点分离，同时支持客户端与服务器间的丰富交互。模块化设计允许实现方按需支持特定功能。
+```go
+package main
 
-## 消息规范
+import (
+    "context"
+    "fmt"
+    "log"
+    "time"
 
-所有MCP客户端与服务器间的消息**必须**遵循[JSON-RPC 2.0](https://www.jsonrpc.org/specification)规范。协议定义了以下消息类型：
+    "github.com/mark3labs/mcp-go/client"
+    "github.com/mark3labs/mcp-go/client/transport"
+    "github.com/mark3labs/mcp-go/mcp"
+)
 
-### 请求
+func main() {
+    ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+    defer cancel()
 
-请求由客户端或服务器发起，用于启动操作。
+    // 创建 stdio 传输
+    stdioTransport := transport.NewStdio("go", nil, "run", "path/to/server/main.go")
 
-```typescript
-{
-  jsonrpc: "2.0";
-  id: string | number;
-  method: string;
-  params?: {
-    [key: string]: unknown;
-  };
+    // 使用传输创建客户端
+    c := client.NewClient(stdioTransport)
+
+    // 启动客户端
+    if err := c.Start(ctx); err != nil {
+        log.Fatalf("启动客户端失败: %v", err)
+    }
+    defer c.Close()
+
+    // 初始化客户端
+    initRequest := mcp.InitializeRequest{}
+    initRequest.Params.ProtocolVersion = mcp.LATEST_PROTOCOL_VERSION
+    initRequest.Params.ClientInfo = mcp.Implementation{
+        Name:    "Hello World Client",
+        Version: "1.0.0",
+    }
+
+    serverInfo, err := c.Initialize(ctx, initRequest)
+    if err != nil {
+        log.Fatalf("初始化失败: %v", err)
+    }
+
+    fmt.Printf("连接到服务器: %s (版本 %s)\n",
+        serverInfo.ServerInfo.Name,
+        serverInfo.ServerInfo.Version)
 }
 ```
 
-* 请求**必须**包含字符串或整数ID
-* 与基础JSON-RPC不同，ID**禁止**为`null`
-* 请求ID在同一会话中**不得**重复使用
+## 架构设计
 
-### 响应
+### 服务器 vs 客户端
 
-响应是对请求的回复，包含操作结果或错误信息。
+**MCP 服务器**:
+- **目的**: 向 LLM 公开工具、资源和提示
+- **用例**: 数据库访问层、文件系统工具、API 集成、自定义业务逻辑
+- **特征**: 被动、响应请求、有状态
 
-```typescript
-{
-  jsonrpc: "2.0";
-  id: string | number;
-  result?: {
-    [key: string]: unknown;
-  }
-  error?: {
-    code: number;
-    message: string;
-    data?: unknown;
-  }
-}
+**MCP 客户端**:
+- **目的**: 连接并使用 MCP 服务器
+- **用例**: LLM 应用程序、编排工具、测试和调试、服务器组合
+- **特征**: 主动、发出请求、协调多个服务器
+
+### 会话管理
+
+MCP-Go 自动处理会话管理，支持适当隔离的多个并发客户端。
+
+**功能**:
+- **多客户端支持**: 多个 LLM 可以同时连接
+- **会话隔离**: 每个客户端具有独立状态
+- **资源清理**: 客户端断开连接时自动清理
+- **并发安全**: 所有会话中的线程安全操作
+
+## 测试和调试
+
+### 使用 Claude Desktop 测试
+
+1. 安装 Claude Desktop
+2. 配置服务器（编辑 Claude 的配置文件）：
+   ```json
+   {
+     "mcpServers": {
+       "hello-world": {
+         "command": "go",
+         "args": ["run", "/path/to/your/hello-server/main.go"]
+       }
+     }
+   }
+   ```
+3. 重启 Claude Desktop
+4. 寻找 🔌 图标表示 MCP 连接
+
+### 使用 MCP Inspector
+
+```bash
+# 安装 MCP Inspector
+npm install -g @modelcontextprotocol/inspector
+
+# 使用 inspector 运行服务器
+mcp-inspector go run main.go
 ```
 
-* 响应**必须**包含与对应请求相同的ID
-* 响应进一步分为**成功结果**和**错误响应**，必须包含`result`或`error`其中之一
+## 常见问题
 
-### 7.2 安全机制
+### 服务器无法启动
+- 检查端口是否已被占用
+- 验证 Go 模块依赖项已安装
+- 确保适当的文件权限
 
-**推荐方案**：
-1. **传输层安全**：强制TLS 1.2+加密
-2. **认证方式**：
-   - OAuth 2.0（用户授权场景）
-   - API密钥（服务间认证）
-3. **权限控制**：
-   - 基于主机的策略执行
-   - 最小权限原则
+### 客户端连接失败
+- 验证服务器正在运行且可访问
+- 检查 StreamableHTTP 客户端的网络连接
+- 验证 stdio 客户端的 stdio 命令路径
 
-**注意事项**：
-- DIO传输需特殊处理
-- 支持自定义认证协商
+### 工具调用失败
+- 验证工具参数类型与模式匹配
+- 检查工具函数中的错误处理
+- 使用 MCP Inspector 进行调试
 
-当前MCP规范**不强制**特定认证方案，但建议实现方考虑以下方案：
+## 总结
 
-* **传输层安全**：所有通信应通过TLS加密
-* **OAuth 2.0**：适合需要用户授权的场景
-* **API密钥**：简单服务间认证
-
-注意：使用DIO传输的实现**不应**遵循此规范，而应从环境中获取凭证。
-
-此外，客户端和服务器**可以**协商自定义的认证授权策略。
-
-关于MCP认证机制的讨论与贡献，欢迎加入[GitHub Discussions](https://github.com/modelcontextprotocol/specification/discussions)共同塑造协议未来！
-
-## 八、开发资源
-
-### 8.1 规范文档
-* [TypeScript架构定义](https://github.com/modelcontextprotocol/specification)
-* [JSON Schema](https://github.com/modelcontextprotocol/specification/blob/main/schema)
-
-### 8.2 社区支持
-* [GitHub Discussions](https://github.com/modelcontextprotocol/specification/discussions)
-* 季度版本更新说明
-* 参考实现库
-
-完整协议规范定义为[TypeScript架构](https://github.com/modelcontextprotocol/specification/blob/main/schema/2025-03-26/schema.ts)，这是所有协议消息和结构的权威来源。
-
-另提供自动生成的[JSON Schema](https://github.com/modelcontextprotocol/specification/blob/main/schema/2025-03-26/schema.json)，可用于各类自动化工具集成。
+MCP-Go 提供了一个强大而简洁的框架来构建 Model Context Protocol 服务器和客户端。通过其高级接口、最小样板代码和完整的 MCP 规范支持，开发者可以快速创建强大的 AI 工具集成。无论是构建简单的工具还是复杂的数据访问层，MCP-Go 都提供了必要的抽象和功能来实现目标。

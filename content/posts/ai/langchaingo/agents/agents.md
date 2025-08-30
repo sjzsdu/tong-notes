@@ -309,3 +309,121 @@ classDiagram
 LangChainGo 的 `agents` 包提供了一个灵活、可扩展的代理系统，支持多种代理类型和工具。通过 `Agent` 接口和 `Executor` 结构体，该包实现了一个通用的代理执行框架，可以根据用户输入和历史步骤决定下一步操作，并执行相应的工具调用，最终达到用户的目标。
 
 该包的设计遵循了良好的软件工程实践，包括接口分离、错误处理、选项模式和上下文传递等，使得代码易于理解、维护和扩展。同时，该包还提供了多种代理实现，包括基于 ReAct 框架的 `OneShotZeroAgent`、针对对话场景优化的 `ConversationalAgent` 和基于 OpenAI 函数调用功能的 `OpenAIFunctionsAgent`，满足了不同场景的需求。
+
+## 8. 端到端示例：Executor + Agent + Tool 调用
+
+下面以一个可落地的例子串起完整流程，覆盖正常路径与常见边界。
+
+### 8.1 场景与参与者
+
+- 输入：{"input": "请计算 2*(3+4) 并解释思路"}
+- 工具：Calculator（Name: "CALCULATOR"，输入为表达式字符串，输出为结果字符串，如 "14"）
+- Agent：ReAct 风格，能基于历史步骤决定下一步（调用工具或直接给答案）
+- Executor 配置：MaxIterations=5，ReturnIntermediateSteps=true，配置了回调与解析错误处理器
+
+### 8.2 时序图（两轮完成）
+
+```mermaid
+sequenceDiagram
+        participant User
+        participant Executor
+        participant Agent
+        participant Tool as Calculator
+
+        User->>Executor: Call({"input": "请计算 2*(3+4) 并解释思路"})
+        Executor->>Executor: 构建 nameToTool = {"CALCULATOR": Calculator}
+        loop i=0..MaxIterations
+                Executor->>Agent: Plan(steps=[], inputs)
+                Agent-->>Executor: actions=[{Tool:"calculator", ToolInput:"2*(3+4)"}], finish=nil
+                Executor->>Tool: Call("2*(3+4)")
+                Tool-->>Executor: Observation="14"
+                Executor->>Executor: steps += {Action, Observation}
+
+                Executor->>Agent: Plan(steps=[...], inputs)
+                Agent-->>Executor: actions=[], finish={ReturnValues:{"output":"14。思路：先算括号3+4=7，再乘以2=14"}}
+                Executor->>Executor: getReturn(包含 intermediateSteps)
+                Executor-->>User: {"output":"14。思路：...", "intermediateSteps":[...]}
+        end
+```
+
+### 8.3 关键状态与数据快照
+
+- 第0轮前
+    - inputs: map[string]string{"input": "请计算 2*(3+4) 并解释思路"}
+    - nameToTool: {"CALCULATOR": Calculator}
+    - steps: []
+
+- 第0轮 Plan → Action
+    - actions: [{Tool:"calculator", ToolInput:"2*(3+4)", Log:"..."}]
+    - finish: nil
+
+- 第0轮 doAction → Observation
+    - 调用工具：tool.Call(ctx, "2*(3+4)") → "14"
+    - steps 追加：
+        - {Action:{Tool:"calculator", ToolInput:"2*(3+4)"}, Observation:"14"}
+
+- 第1轮 Plan → Finish
+    - actions: []
+    - finish: {ReturnValues:{"output":"14。思路：先算括号..."}}
+
+- 最终返回（ReturnIntermediateSteps=true）：
+    - {
+            "output": "14。思路：先算括号3+4=7，再乘以2=14",
+            "intermediateSteps": [
+                {
+                    "Action": {"Tool": "calculator", "ToolInput": "2*(3+4)"},
+                    "Observation": "14"
+                }
+            ]
+        }
+
+### 8.4 常见分支与边界
+
+1) 工具名不匹配
+
+```mermaid
+flowchart LR
+        A[Agent 产出 Tool=websearch] --> B{websearch 注册过?}
+    B -- 否 --> C["在 steps 记录 Observation: websearch is not a valid tool, try another one"]
+        C --> D[进入下一轮 Plan]
+```
+
+- 行为：不报错，追加一个包含该 Action 和“无效工具”提示的步骤，交还给 Agent 自我纠偏。
+
+2) 解析错误可恢复（ErrUnableToParseOutput）
+
+```mermaid
+sequenceDiagram
+        Executor->>Agent: Plan(...)
+        Agent-->>Executor: error=ErrUnableToParseOutput
+        Executor->>Executor: ErrorHandler 格式化错误为 Observation 文本
+        Executor->>Executor: steps += {Observation:"Could not parse: ..."}
+        Executor-->>Executor: 继续下一轮 Plan
+```
+
+- 行为：若配置了 ErrorHandler，会把解析错误转为步骤中的 Observation，允许下一轮继续；否则直接返回错误。
+
+3) 工具调用失败
+
+- tool.Call 返回 error → 立刻失败向上返回（不中断追加 steps）。
+
+4) 达到最大迭代上限
+
+- 跑满 MaxIterations 仍无 finish：触发 HandleAgentFinish 回调，返回值中 output=ErrNotFinished，函数返回 ErrNotFinished。
+
+### 8.5 小示例：无中间步骤返回
+
+- 若 ReturnIntermediateSteps=false：
+    - 返回仅包含最终键：{"output":"14。思路：..."}
+
+### 8.6 执行器回调触发点
+
+- HandleAgentAction：每次 doAction 前触发，便于记录 action 与输入
+- HandleAgentFinish：出现 finish 或未完成超限时触发，便于统一收尾日志
+
+### 8.7 迷你对照清单
+
+- 输入必须是字符串（inputsToString），否则报错并终止
+- 工具查找使用大写名匹配（strings.ToUpper）
+- ToolInput 会去掉末尾的 "\nObservation:" 再传给工具
+- steps 元素是 {Action, Observation}，Agent 下一轮可基于其再规划
