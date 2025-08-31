@@ -1,3 +1,17 @@
+---
+title: "ThreeViewer 架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "ThreeViewer 架构分析"
+tags: 
+  - "可视化"
+  - "3D"
+  - "文档"
+  - "UVF"
+categories:
+  - "UVF"
+---
+
 # ThreeViewer 架构分析
 
 ThreeViewer 是统一可视化框架 (UVF) 的核心渲染组件，负责3D场景的渲染、交互和管理。本文档从架构角度分析 ThreeViewer 的结构、组件关系和主要功能。

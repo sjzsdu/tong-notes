@@ -1,5 +1,16 @@
 ---
 title: "数学公式测试页面"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "数学公式测试页面"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "数学公式测试页面"
 date: 2025-01-15
 description: "测试数学公式渲染效果"
 tags: ["测试", "数学公式"]

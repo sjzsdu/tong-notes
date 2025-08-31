@@ -1,5 +1,19 @@
 ---
 title: "Flow360 系统架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Flow360 系统架构分析"
+tags: 
+  - "CFD"
+  - "文档"
+  - "Flow360"
+  - "仿真"
+categories:
+  - "Flow360"
+---
+
+---
+title: "Flow360 系统架构分析"
 date: 2023-11-15T10:00:00+08:00
 author: "架构分析师"
 description: "Flow360计算流体动力学(CFD)模拟系统的架构分析文档"

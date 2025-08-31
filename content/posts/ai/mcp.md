@@ -1,5 +1,19 @@
 ---
 title: "Model Context Protocol (MCP) 技术文档集"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Model Context Protocol (MCP) 技术文档集"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "Model Context Protocol (MCP) 技术文档集"
 date: 2024-12-15T10:00:00+08:00
 lastmod: 2024-12-15T15:30:00+08:00
 description: "Model Context Protocol (MCP) 技术文档集合，包含架构分析、客户端实现和服务器端实现的详细解析"

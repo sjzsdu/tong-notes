@@ -1,5 +1,19 @@
 ---
 title: "Tidy3D 示例库代码架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Tidy3D 示例库代码架构分析"
+tags: 
+  - "Tidy3D"
+  - "物理"
+  - "文档"
+  - "仿真"
+categories:
+  - "Tidy3D"
+---
+
+---
+title: "Tidy3D 示例库代码架构分析"
 date: 2023-11-15T10:00:00+08:00
 author: "Tidy3D团队"
 description: "对Tidy3D示例库代码的架构分析，包括compile-to-yml.py、notebook-convert.py和rst-convert.py三个核心文件的功能和关系"

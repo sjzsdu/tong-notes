@@ -1,3 +1,17 @@
+---
+title: "MCP-Go 文档总结"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "MCP-Go 文档总结"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
 # MCP-Go 文档总结
 
 ## 概述

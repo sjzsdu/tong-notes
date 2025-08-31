@@ -1,4 +1,19 @@
 ---
+title: "LangChainGo llms 包对外暴露 API 分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo llms 包对外暴露 API 分析"
+tags: 
+  - "机器学习"
+  - "文档"
+  - "AI"
+  - "LLM"
+  - "API"
+categories:
+  - "AI"
+---
+
+---
 title: "LangChainGo llms包对外暴露API分析"
 date: "2025-06-26"
 lastmod: "2025-06-26"

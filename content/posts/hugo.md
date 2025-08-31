@@ -1,4 +1,15 @@
 ---
+title: "安装Hugo (macOS)"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "安装Hugo (macOS)"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
 title: "Hugo静态网站生成器完全指南：从入门到精通"
 date: ""
 lastmod: "2023-11-02T15:30:00+08:00"

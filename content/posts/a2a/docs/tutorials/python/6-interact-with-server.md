@@ -1,3 +1,14 @@
+---
+title: "6. 与服务器交互"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "6. 与服务器交互"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # 6. 与服务器交互
 
 在Helloworld A2A服务器运行时，让我们向它发送一些请求。SDK包含一个客户端（`A2AClient`），简化了这些交互。

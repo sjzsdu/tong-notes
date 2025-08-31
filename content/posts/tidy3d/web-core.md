@@ -1,4 +1,18 @@
 ---
+title: "Tidy3D Web Core 模块分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Tidy3D Web Core 模块分析"
+tags: 
+  - "Tidy3D"
+  - "物理"
+  - "文档"
+  - "仿真"
+categories:
+  - "Tidy3D"
+---
+
+---
 title: "Tidy3D Web Core模块架构解析"
 date: ""
 lastmod: "2025-06-17"

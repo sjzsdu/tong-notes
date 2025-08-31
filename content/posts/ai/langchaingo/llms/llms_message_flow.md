@@ -1,4 +1,18 @@
 ---
+title: "LangChainGo llms 包消息处理流程"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo llms 包消息处理流程"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
 title: "LangChainGo llms包消息处理流程"
 date: "2025-06-26"
 lastmod: "2025-06-26"

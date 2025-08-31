@@ -1,4 +1,18 @@
 ---
+title: "LangChainGo OutputParser 包分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo OutputParser 包分析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
 title: LangChainGo OutputParser 包分析
 date: 2025-06-30
 tags: ["Go", "LangChain", "解析器", "LLM"]

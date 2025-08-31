@@ -1,3 +1,14 @@
+---
+title: "A2A 文档中文版"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "A2A 文档中文版"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # A2A 文档中文版
 
 这是Agent2Agent (A2A) 协议官方文档的中文版本。A2A 是一个开放协议，实现AI代理间的标准化通信和协作。

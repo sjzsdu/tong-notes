@@ -1,5 +1,19 @@
 ---
 title: "LangChainGo 向量存储（VectorStores）包分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo 向量存储（VectorStores）包分析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "LangChainGo 向量存储（VectorStores）包分析"
 date: 2023-11-15T10:00:00+08:00
 draft: false
 description: "详细分析 LangChainGo 的向量存储包及其实现"

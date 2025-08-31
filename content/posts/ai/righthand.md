@@ -1,5 +1,19 @@
 ---
 title: "RightHand 语音控制助手 - 架构设计文档"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "RightHand 语音控制助手 - 架构设计文档"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "RightHand 语音控制助手 - 架构设计文档"
 description: "基于 Go 语言开发的 macOS 语音控制助手系统架构深度分析"
 date: 2025-01-18T10:00:00+08:00
 lastmod: 2025-01-18T10:00:00+08:00

@@ -1,5 +1,16 @@
 ---
 title: "@flex/signals 信号库分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "@flex/signals 信号库分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "@flex/signals 信号库分析"
 date: 2023-11-15T10:00:00+08:00
 description: "深入解析 @flex/signals 响应式编程库的设计与实现"
 tags: ["signals", "响应式编程", "前端架构", "状态管理"]

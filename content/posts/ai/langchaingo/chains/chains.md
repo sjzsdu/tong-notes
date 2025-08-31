@@ -1,4 +1,18 @@
 ---
+title: "LangChainGo Chains 包架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo Chains 包架构分析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
 title: "LangChainGo Chains 包详解"
 date: 2025-06-30T10:00:00+08:00  # 日期格式正确
 author: "AI助手"

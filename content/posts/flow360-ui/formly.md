@@ -1,3 +1,14 @@
+---
+title: "Formly 框架详解"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Formly 框架详解"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # Formly 框架详解
 
 ## 概述

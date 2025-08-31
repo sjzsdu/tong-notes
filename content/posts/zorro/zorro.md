@@ -1,5 +1,16 @@
 ---
 title: "FC-Zorro 组件库架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "FC-Zorro 组件库架构分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "FC-Zorro 组件库架构分析"
 date: 2023-11-15T10:00:00+08:00
 author: "架构师"
 description: "基于Angular和NG-Zorro的科学计算组件库架构分析"

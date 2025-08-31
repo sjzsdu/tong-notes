@@ -1,4 +1,19 @@
 ---
+title: "TradingAgents 系统架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "TradingAgents 系统架构分析"
+tags: 
+  - "机器学习"
+  - "文档"
+  - "AI"
+  - "架构"
+  - "LLM"
+categories:
+  - "AI"
+---
+
+---
 title: "TradingAgents 系统分析"
 date: "2025-06-24"
 lastmod: "2025-06-24"

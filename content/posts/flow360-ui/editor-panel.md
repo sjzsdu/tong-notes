@@ -1,5 +1,16 @@
 ---
 title: "Flow360 Editor Panel 组件架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Flow360 Editor Panel 组件架构分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "Flow360 Editor Panel 组件架构分析"
 date: 2025-07-22T10:00:00+08:00
 draft: false
 description: "深入分析 Flow360 工作台中 Editor Panel 组件的架构设计、功能实现和优化建议"

@@ -1,5 +1,19 @@
 ---
 title: "React 核心库架构深度分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "React 核心库架构深度分析"
+tags: 
+  - "前端"
+  - "React"
+  - "文档"
+  - "JavaScript"
+categories:
+  - "React"
+---
+
+---
+title: "React 核心库架构深度分析"
 description: "深入分析React核心库的源代码架构，从组件系统、Hook机制到JSX实现的全面剖析"
 date: "2025-08-02"
 lastmod: "2025-08-02"

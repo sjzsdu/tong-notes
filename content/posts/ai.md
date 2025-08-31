@@ -1,5 +1,16 @@
 ---
 title: "AI技术与架构文档集"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "AI技术与架构文档集"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "AI技术与架构文档集"
 date: 2025-07-20T10:00:00+08:00
 lastmod: 2025-07-20T10:00:00+08:00
 draft: false

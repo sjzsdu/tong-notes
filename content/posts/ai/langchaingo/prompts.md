@@ -1,5 +1,19 @@
 ---
 title: "LangChainGo Prompts 包分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo Prompts 包分析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "LangChainGo Prompts 包分析"
 date: 2025-07-01
 draft: false
 authors: ["AI助手"]

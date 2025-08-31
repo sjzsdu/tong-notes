@@ -1,5 +1,18 @@
 ---
 title: "GitHub Copilot 文档要点速览"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "GitHub Copilot 文档要点速览"
+tags: 
+  - "版本控制"
+  - "文档"
+  - "Git"
+categories:
+  - "Git"
+---
+
+---
+title: "GitHub Copilot 文档要点速览"
 date: "2025-08-11"
 lastmod: "2025-08-11T00:00:00Z"
 draft: false

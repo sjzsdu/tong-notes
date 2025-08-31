@@ -1,4 +1,18 @@
 ---
+title: "langchaingo-ollama-rag 架构深度解析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "langchaingo-ollama-rag 架构深度解析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
 title: "langchaingo-ollama-rag 架构分析：企业级RAG系统设计实践"
 date: 2025-07-19T10:00:00+08:00
 draft: false

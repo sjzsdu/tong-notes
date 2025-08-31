@@ -1,5 +1,19 @@
 ---
 title: "LangChainGo Chains 详细示例指南"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo Chains 详细示例指南"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "LangChainGo Chains 详细示例指南"
 date: 2025-07-24T10:00:00+08:00
 author: "AI助手"
 description: "深入展示LangChainGo chains包的各种链类型使用方法和最佳实践"

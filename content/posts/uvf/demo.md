@@ -1,5 +1,19 @@
 ---
 title: "UVF 框架使用指南与实战示例"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "UVF 框架使用指南与实战示例"
+tags: 
+  - "可视化"
+  - "3D"
+  - "文档"
+  - "UVF"
+categories:
+  - "UVF"
+---
+
+---
+title: "UVF 框架使用指南与实战示例"
 date: 2025-07-30T10:00:00+08:00
 draft: false
 description: "基于 UVF (Unified Visualization Framework) 的深入研读，通过完整的实际案例展示如何使用这个强大的 3D 可视化框架"

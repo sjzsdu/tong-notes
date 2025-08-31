@@ -1,3 +1,14 @@
+---
+title: "4. 代理执行器"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "4. 代理执行器"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # 4. 代理执行器
 
 A2A代理如何处理请求并生成响应/事件的核心逻辑由**代理执行器**处理。A2A Python SDK提供了抽象基类`a2a.server.agent_execution.AgentExecutor`供您实现。

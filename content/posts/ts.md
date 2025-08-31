@@ -1,4 +1,15 @@
 ---
+title: "TypeScript 全面解析：JavaScript 的超集"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "TypeScript 全面解析：JavaScript 的超集"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
 title: TypeScript 全面解析
 date: ""
 lastmod: "2023-10-25T00:00:00Z"

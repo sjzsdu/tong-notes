@@ -1,5 +1,19 @@
 ---
 title: "LangChain Go Agent 类型详解与 Demo"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChain Go Agent 类型详解与 Demo"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "LangChain Go Agent 类型详解与 Demo"
 description: "深入解读 LangChain Go 包中各种 Agent 类型的源代码，提供详细的实现 demo 和使用说明"
 date: 2025-07-26
 categories: ["架构分析", "Go", "LangChain", "AI Agent"]

@@ -1,3 +1,17 @@
+---
+title: "多 ThreeView（ThreeViewer）并行时的相互影响与机制"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "多 ThreeView（ThreeViewer）并行时的相互影响与机制"
+tags: 
+  - "可视化"
+  - "3D"
+  - "文档"
+  - "UVF"
+categories:
+  - "UVF"
+---
+
 ## 多 ThreeView（ThreeViewer）并行时的相互影响与机制
 
 本节梳理 UVF 中 `ThreeViewer` 在多视图并行场景下的交互、共享与隔离点，帮助定位同步相机、多实例资源与事件的影响范围，以及潜在的性能/状态耦合问题。

@@ -1,3 +1,14 @@
+---
+title: "Xinzip 项目架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Xinzip 项目架构分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # Xinzip 项目架构分析
 
 ## 概述

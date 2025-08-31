@@ -1,3 +1,14 @@
+---
+title: "Python快速入门教程：构建A2A代理"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Python快速入门教程：构建A2A代理"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # Python快速入门教程：构建A2A代理
 
 欢迎来到Agent2Agent（A2A）Python快速入门教程！

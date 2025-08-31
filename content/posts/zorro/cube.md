@@ -1,5 +1,16 @@
 ---
 title: "FC-Cube 项目架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "FC-Cube 项目架构分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "FC-Cube 项目架构分析"
 date: 2023-11-15T10:00:00+08:00
 author: "FC Team"
 description: "FC-Cube 项目的架构分析与设计文档"

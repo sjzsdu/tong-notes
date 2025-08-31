@@ -1,5 +1,19 @@
 ---
 title: "Tidy3D Web API与电磁场仿真分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Tidy3D Web API与电磁场仿真分析"
+tags: 
+  - "Tidy3D"
+  - "物理"
+  - "文档"
+  - "仿真"
+categories:
+  - "Tidy3D"
+---
+
+---
+title: "Tidy3D Web API与电磁场仿真分析"
 date: 2025-07-10
 description: "Tidy3D云计算API的使用方法与电磁场数据分析示例"
 tags: ["电磁仿真", "FDTD", "云计算", "Tidy3D", "API"]

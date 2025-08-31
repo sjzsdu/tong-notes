@@ -1,5 +1,19 @@
 ---
 title: "LangChainGo Anthropic 集成分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo Anthropic 集成分析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "LangChainGo Anthropic 集成分析"
 date: 2023-07-15T10:30:00+08:00
 author: "AI 分析师"
 description: "深入分析 LangChainGo 中的 Anthropic LLM 集成实现"

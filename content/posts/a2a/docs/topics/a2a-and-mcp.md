@@ -1,3 +1,14 @@
+---
+title: "A2A和MCP：代理系统的互补协议"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "A2A和MCP：代理系统的互补协议"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # A2A和MCP：代理系统的互补协议
 
 ## A2A ❤️ MCP

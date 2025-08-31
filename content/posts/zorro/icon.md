@@ -1,5 +1,16 @@
 ---
 title: "Flexcompute Icon Library (FC-Icons) 项目分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Flexcompute Icon Library (FC-Icons) 项目分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "Flexcompute Icon Library (FC-Icons) 项目分析"
 date: 2023-11-15T10:00:00+08:00
 author: "Flexcompute 团队"
 description: "FC-Icons 是 Flexcompute 公司开发的一个 Angular 图标库，为产品提供统一的图标资源，本文详细分析了其架构和实现。"

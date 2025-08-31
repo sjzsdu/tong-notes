@@ -1,5 +1,19 @@
 ---
 title: "提示工程核心知识与实践经验"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "提示工程核心知识与实践经验"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "提示工程核心知识与实践经验"
 date: 2025-07-10T10:00:00+08:00
 lastmod: 2025-07-10T10:00:00+08:00
 draft: false

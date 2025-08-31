@@ -1,5 +1,19 @@
 ---
 title: "LangChainGo Callbacks 包分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo Callbacks 包分析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "LangChainGo Callbacks 包分析"
 date: 2023-07-10
 author: "AI 助手"
 description: "LangChainGo callbacks 包的架构分析和设计模式"

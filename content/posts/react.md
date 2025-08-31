@@ -1,5 +1,19 @@
 ---
 title: "React 项目架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "React 项目架构分析"
+tags: 
+  - "前端"
+  - "React"
+  - "文档"
+  - "JavaScript"
+categories:
+  - "React"
+---
+
+---
+title: "React 项目架构分析"
 description: "深入分析React项目的monorepo架构，详细介绍各个包的功能和职责"
 date: "2025-08-02"
 lastmod: "2025-08-02"

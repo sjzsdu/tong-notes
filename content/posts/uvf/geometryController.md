@@ -1,4 +1,18 @@
 ---
+title: "GeometryController 架构解读（架构师视角）"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "GeometryController 架构解读（架构师视角）"
+tags: 
+  - "可视化"
+  - "3D"
+  - "文档"
+  - "UVF"
+categories:
+  - "UVF"
+---
+
+---
 title: "GeometryController 架构解读"
 date: 2025-08-26T10:06:32+08:00
 draft: false

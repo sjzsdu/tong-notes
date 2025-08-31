@@ -1,5 +1,19 @@
 ---
 title: "Angular CDK Drag-Drop 实现原理分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Angular CDK Drag-Drop 实现原理分析"
+tags: 
+  - "前端"
+  - "Angular"
+  - "文档"
+  - "TypeScript"
+categories:
+  - "Angular"
+---
+
+---
+title: "Angular CDK Drag-Drop 实现原理分析"
 date: 2023-07-10T15:32:14+08:00
 lastmod: "2023-07-15"
 draft: false

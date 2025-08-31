@@ -1,5 +1,19 @@
 ---
 title: "LangChainGo Embeddings 包分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo Embeddings 包分析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "LangChainGo Embeddings 包分析"
 date: 2025-06-30T10:00:00+08:00
 author: "AI 助手"
 description: "对 LangChainGo 中 embeddings 包的全面分析，包括核心接口、实现和使用方法"

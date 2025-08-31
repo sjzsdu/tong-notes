@@ -1,5 +1,16 @@
 ---
 title: "Flow360 UI 架构文档"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Flow360 UI 架构文档"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "Flow360 UI 架构文档"
 description: "Flow360 UI 前端架构的完整技术文档，包括 Angular、React 混合架构、组件设计和最佳实践"
 date: 2025-07-24T00:00:00+08:00
 lastmod: 2025-07-30T00:00:00+08:00

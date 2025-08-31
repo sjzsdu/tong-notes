@@ -1,5 +1,16 @@
 ---
 title: "FC-Model: 元数据类型系统分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "FC-Model: 元数据类型系统分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "FC-Model: 元数据类型系统分析"
 date: 2023-07-10T15:00:00+08:00
 author: "AI助手"
 description: "FC-Model 库中元数据类型系统的详细分析和架构图解"

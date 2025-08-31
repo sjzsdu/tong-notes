@@ -1,5 +1,16 @@
 ---
 title: "Flow360 Workbench 组件架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Flow360 Workbench 组件架构分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "Flow360 Workbench 组件架构分析"
 date: 2025-07-22T11:00:00+08:00
 draft: false
 description: "从架构师角度深度解读 Flow360 Workbench 核心组件的设计理念、架构模式和实现策略"

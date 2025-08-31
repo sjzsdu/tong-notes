@@ -1,3 +1,14 @@
+---
+title: "Flow360 Workbench loadModeManifest 函数分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Flow360 Workbench loadModeManifest 函数分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # Flow360 Workbench loadModeManifest 函数分析
 
 `loadModeManifest` 函数是 Flow360 UI 工作台中的一个核心函数，负责加载和渲染可视化模式所需的数据清单(manifest)。以下是该函数的执行流程和功能分析。

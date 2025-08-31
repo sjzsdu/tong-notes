@@ -1,3 +1,14 @@
+---
+title: "Flow360 Physics 项目解读"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Flow360 Physics 项目解读"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 
 # Flow360 Physics 项目解读
 

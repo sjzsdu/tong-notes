@@ -1,3 +1,14 @@
+---
+title: "7. 流式传输和多轮交互（LangGraph示例）"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "7. 流式传输和多轮交互（LangGraph示例）"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # 7. 流式传输和多轮交互（LangGraph示例）
 
 Helloworld示例演示了A2A的基本机制。对于更高级的功能，如强大的流式传输、任务状态管理和由LLM驱动的多轮对话，我们将转向位于[`a2a-samples/samples/python/agents/langgraph/`](https://github.com/a2aproject/a2a-samples/tree/main/samples/python/agents/langgraph)的LangGraph示例。

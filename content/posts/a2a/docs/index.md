@@ -1,3 +1,14 @@
+---
+title: "Agent2Agent (A2A) 协议"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Agent2Agent (A2A) 协议"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
 # Agent2Agent (A2A) 协议
 
 Agent2Agent（A2A）协议是一个开放标准，用于实现 AI 代理之间的通信和协作。它提供了统一的通信语言，使不同框架和供应商构建的代理能够互操作。

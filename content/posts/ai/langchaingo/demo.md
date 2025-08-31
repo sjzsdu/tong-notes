@@ -1,5 +1,19 @@
 ---
 title: "LangChainGo 使用指南"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "LangChainGo 使用指南"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "LangChainGo 使用指南"
 date: 2023-07-10
 draft: false
 tags: ["LangChain", "Go", "AI", "使用指南"]

@@ -1,5 +1,19 @@
 ---
 title: "Tidy3D基础原理详解"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Tidy3D基础原理详解"
+tags: 
+  - "Tidy3D"
+  - "物理"
+  - "文档"
+  - "仿真"
+categories:
+  - "Tidy3D"
+---
+
+---
+title: "Tidy3D基础原理详解"
 date: 2025-07-10
 description: "Tidy3D软件的工作原理、核心组件和使用方法详细指南"
 tags: ["电磁仿真", "FDTD", "光子学", "Tidy3D", "教程"]

@@ -1,5 +1,16 @@
 ---
 title: "Tong MCP 服务器使用指南与架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Tong MCP 服务器使用指南与架构分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "Tong MCP 服务器使用指南与架构分析"
 date: 2025-07-07T10:00:00+08:00
 author: "Tong Team"
 description: "详细解析 Tong MCP 服务器的使用方法和架构设计，从架构师角度分析其工作原理和核心组件"

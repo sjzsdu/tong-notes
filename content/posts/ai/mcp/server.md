@@ -1,5 +1,19 @@
 ---
 title: "MCP-Go Server 包架构分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "MCP-Go Server 包架构分析"
+tags: 
+  - "LLM"
+  - "机器学习"
+  - "文档"
+  - "AI"
+categories:
+  - "AI"
+---
+
+---
+title: "MCP-Go Server 包架构分析"
 date: 2023-08-15T10:00:00+08:00
 lastmod: 2023-08-20T15:30:00+08:00
 description: "Model Context Protocol (MCP) Go 服务器端实现的架构分析和设计模式解析"

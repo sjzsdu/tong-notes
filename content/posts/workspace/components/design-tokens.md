@@ -1,5 +1,17 @@
 ---
 title: "设计令牌系统分析与实践"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "设计令牌系统分析与实践"
+tags: 
+  - "架构"
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
+title: "设计令牌系统分析与实践"
 date: 2023-11-15
 description: "深入分析 @flex/design-tokens 包的实现原理与最佳实践"
 tags: ["设计系统", "设计令牌", "Style Dictionary", "前端架构"]

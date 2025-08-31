@@ -1,4 +1,15 @@
 ---
+title: "Tidy3D Angular Editor模块分析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "Tidy3D Angular Editor模块分析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
 title: "Tidy3D Angular 项目模块分析报告"
 description: "深入分析Tidy3D科学计算仿真平台的Angular前端架构，包括模块结构、组件关系和设计模式"
 date: 2025-07-07

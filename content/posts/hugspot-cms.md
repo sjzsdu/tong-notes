@@ -1,4 +1,15 @@
 ---
+title: "HubSpot CMS模块技术解析"
+date: 2025-08-30T23:04:28+08:00
+draft: false
+description: "HubSpot CMS模块技术解析"
+tags: 
+  - "文档"
+categories:
+  - "技术"
+---
+
+---
 title: HubSpot CMS模块技术解析
 date: ""
 lastmod: "2023-05-15" 
