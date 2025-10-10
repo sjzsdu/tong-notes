@@ -4,7 +4,10 @@
   "description": "Tong Notes website",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "hugo server -D --bind 0.0.0.0",
+    "build": "hugo --minify",
+    "clean": "rm -rf public"
   },
   "author": "",
   "license": "ISC",

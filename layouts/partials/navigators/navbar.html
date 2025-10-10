@@ -10,7 +10,6 @@
   {{ $blogEnabled = true }}
 {{ end }}
 
-{{/* by default, don't use any logo */}}
 {{ $mainLogo := "" }}
 {{ $invertedLogo := "" }}
 {{ $darkLogo := "" }}
@@ -26,7 +25,6 @@
   {{ $darkLogo = site.Params.logo.dark }}
 {{ end }}
 
-{{/* resize the logos. don't resize svg because it is not supported */}}
 {{ if $mainLogo }}
   {{ $mainLogo = resources.Get $mainLogo}}
   {{ if and $mainLogo (not (or (eq $mainLogo.MediaType.SubType "svg") (eq $mainLogo.MediaType.SubType "gif"))) }}

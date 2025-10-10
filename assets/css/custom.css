@@ -1,5 +1,21 @@
 /* 自定义样式 */
 
+/* PDF导出按钮样式 */
+.bg-pdf {
+  background-color: #dc3545 !important;
+  color: white !important;
+  transition: all 0.3s ease;
+}
+
+.bg-pdf:hover {
+  background-color: #c82333 !important;
+  transform: scale(1.1);
+}
+
+#export-pdf-btn {
+  cursor: pointer;
+}
+
 /* 目录大纲切换按钮样式 */
 #toc-toggler {
   position: fixed;

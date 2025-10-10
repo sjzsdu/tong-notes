@@ -1,0 +1,40 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+{{ partial "helpers/style-bundle.html" . }}
+
+<!--================= fab-icon =========================-->
+{{ if site.Params.logo.favicon }}
+  {{ $favicon := site.Params.logo.favicon }}
+
+  {{ $favicon = resources.Get $favicon }}
+  {{ if and $favicon (ne $favicon.MediaType.SubType "svg") }}
+    {{ $favicon = $favicon.Resize "42x" }}
+  {{ end }}
+  {{ $favicon = $favicon.RelPermalink}}
+
+  <link rel="icon" type="image/png" href="{{ $favicon }}" />
+{{end}}
+
+{{ with .OutputFormats.Get "rss" -}}
+  {{ printf `<link rel=%q type=%q href=%q title=%q>` .Rel .MediaType.Type .Permalink site.Title | safeHTML }}
+{{ end }}
+
+<!-- 加载自定义CSS -->
+{{ $customCSS := resources.Get "css/custom.css" }}
+{{ if $customCSS }}
+  {{ $customCSS = $customCSS | resources.Minify }}
+  <link rel="stylesheet" href="{{ $customCSS.RelPermalink }}" integrity="{{ $customCSS.Data.Integrity }}">
+{{ end }}
+
+<!-- 加载PDF导出所需的库 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- 加载自定义JavaScript -->
+{{ $customJS := resources.Get "js/custom.js" }}
+{{ if $customJS }}
+  {{ $customJS = $customJS | resources.Minify }}
+  <script src="{{ $customJS.RelPermalink }}" integrity="{{ $customJS.Data.Integrity }}"></script>
+{{ end }}

@@ -30,6 +30,12 @@ params:
     blog:
       enable: true
       showAuthor: true
+      shareButtons:
+        facebook: true
+        twitter: true
+        reddit: true
+        linkedin: true
+        email: true
     # 启用暗黑模式
     darkMode:
       enable: true
