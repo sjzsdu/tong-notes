@@ -200,3 +200,123 @@ html[data-theme='dark'] .content figcaption {
 .content .center img {
   margin: 0 auto;
 }
+
+/* 表格样式优化 */
+.post-content {
+  overflow-x: auto;
+}
+
+.post-content table {
+  width: 100%;
+  min-width: 600px;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.9em;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+/* 表格单元格样式 */
+.post-content table th,
+.post-content table td {
+  padding: 12px 15px;
+  text-align: left;
+  vertical-align: top;
+  border: 1px solid #ddd;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.5;
+}
+
+/* 表头样式 */
+.post-content table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+}
+
+/* 表格行的斑马纹效果 */
+.post-content table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.post-content table tbody tr:hover {
+  background-color: #e9ecef;
+  transition: background-color 0.3s ease;
+}
+
+/* 暗黑模式下的表格样式 */
+html[data-theme='dark'] .post-content table {
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+  background-color: #1a1a1a;
+}
+
+html[data-theme='dark'] .post-content table th,
+html[data-theme='dark'] .post-content table td {
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+html[data-theme='dark'] .post-content table th {
+  background-color: #2d2d2d;
+  color: #f0f0f0;
+  border-bottom-color: #555;
+}
+
+html[data-theme='dark'] .post-content table tbody tr:nth-child(even) {
+  background-color: #2a2a2a;
+}
+
+html[data-theme='dark'] .post-content table tbody tr:hover {
+  background-color: #333;
+}
+
+/* 响应式表格 */
+@media (max-width: 768px) {
+  .post-content table {
+    font-size: 0.8em;
+    margin: 1em 0;
+    min-width: 500px;
+  }
+  
+  .post-content table th,
+  .post-content table td {
+    padding: 8px 10px;
+  }
+}
+
+/* 表格容器滚动条样式 */
+.post-content::-webkit-scrollbar {
+  height: 8px;
+}
+
+.post-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.post-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.post-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 暗黑模式下的滚动条 */
+html[data-theme='dark'] .post-content::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+html[data-theme='dark'] .post-content::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+html[data-theme='dark'] .post-content::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}

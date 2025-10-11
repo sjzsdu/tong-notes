@@ -103,8 +103,17 @@ async function exportToPDF() {
 
     // 获取文章内容区域
     const articleContent = document.querySelector('.post-content');
-    const titleElement = document.querySelector('.title h1, h1');
-    const articleTitle = titleElement ? titleElement.textContent : document.title;
+    
+    // 优先获取文章内容中的主标题
+    let articleTitle = '';
+    const contentH1 = document.querySelector('#post-content h1, .post-content h1');
+    if (contentH1) {
+      articleTitle = contentH1.textContent;
+    } else {
+      // 如果文章内容中没有h1，则尝试其他位置的标题
+      const titleElement = document.querySelector('.title h1, h1, .post-title, .article-title');
+      articleTitle = titleElement ? titleElement.textContent : document.title;
+    }
     
     if (!articleContent) {
       alert('未找到文章内容');
@@ -118,10 +127,6 @@ async function exportToPDF() {
     // 设置字体（支持中文）
     pdf.setFont('Arial', 'normal');
     
-    // 添加标题
-    pdf.setFontSize(16);
-    pdf.text(articleTitle || '文章标题', 20, 20);
-    
     // 创建一个临时容器用于渲染
     const tempContainer = document.createElement('div');
     tempContainer.style.position = 'absolute';
@@ -131,6 +136,12 @@ async function exportToPDF() {
     tempContainer.style.backgroundColor = 'white';
     tempContainer.style.padding = '20px';
     tempContainer.innerHTML = articleContent.innerHTML;
+    
+    // 移除PDF中不需要的元素
+    const elementsToRemove = tempContainer.querySelectorAll('.svg-pan-zoom-controls, svg-pan-zoom-controls, [class*="svg-pan-zoom-control"], [class*="pan-zoom-control"]');
+    elementsToRemove.forEach(element => {
+      element.remove();
+    });
     
     document.body.appendChild(tempContainer);
 
@@ -193,15 +204,18 @@ function generatePDFFileName(articleTitle) {
   // 处理文章标题
   let cleanTitle = '';
   if (articleTitle && articleTitle.trim()) {
-    // 移除或替换特殊字符，保留中文、英文、数字、空格、连字符
+    // 清理标题：移除HTML标签、特殊字符等
     cleanTitle = articleTitle
+      .replace(/<[^>]*>/g, '') // 移除HTML标签
+      .replace(/&[a-zA-Z0-9#]+;/g, '') // 移除HTML实体
       .replace(/[<>:"/\\|?*]/g, '') // 移除文件名不允许的字符
       .replace(/[，。！？；：""''（）【】]/g, '') // 移除中文标点
       .replace(/[,\.!\?;:"'()\[\]]/g, '') // 移除英文标点
+      .replace(/[-—–]/g, '-') // 统一各种连字符
       .replace(/\s+/g, '-') // 将空格替换为连字符
       .replace(/-+/g, '-') // 合并多个连字符
-      .replace(/^-|-$/g, '') // 移除开头和结尾的连字符
-      .substring(0, 50); // 限制长度为50个字符
+      .replace(/^-+|-+$/g, '') // 移除开头和结尾的连字符
+      .substring(0, 60); // 适当增加长度限制到60个字符
   }
   
   // 如果清理后的标题为空，使用默认名称
@@ -209,12 +223,6 @@ function generatePDFFileName(articleTitle) {
     cleanTitle = 'article';
   }
   
-  // 获取站点名称或使用默认值
-  const siteName = document.querySelector('meta[property="og:site_name"]')?.content || 
-                   document.querySelector('title')?.textContent?.split(' - ')[1] || 
-                   'blog';
-  const cleanSiteName = siteName.replace(/[^\w\s-]/gi, '').replace(/\s+/g, '-').toLowerCase();
-  
-  // 生成最终文件名：日期-站点名-文章标题.pdf
-  return `${dateStr}-${cleanSiteName}-${cleanTitle}.pdf`;
+  // 简化文件名格式：日期-文章标题.pdf （去掉站点名以保持简洁）
+  return `${dateStr}-${cleanTitle}.pdf`;
 }

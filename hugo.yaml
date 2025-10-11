@@ -14,8 +14,6 @@ languages:
     languageCode: "zh-cn"
     title: "Tong Notes"
 
-
-
 params:
   version: "1.0.4"
   description: "这是一个关于学习和研究新东西的记录笔记。"
@@ -35,7 +33,6 @@ params:
         twitter: true
         reddit: true
         linkedin: true
-        email: true
     # 启用暗黑模式
     darkMode:
       enable: true
