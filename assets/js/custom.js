@@ -84,6 +84,9 @@ document.addEventListener('DOMContentLoaded', function() {
       exportToPDF();
     });
   }
+
+  // 修复.md链接
+  fixMarkdownLinks();
 });
 
 // PDF导出函数
@@ -225,4 +228,28 @@ function generatePDFFileName(articleTitle) {
   
   // 简化文件名格式：日期-文章标题.pdf （去掉站点名以保持简洁）
   return `${dateStr}-${cleanTitle}.pdf`;
+}
+
+// 修复Markdown链接
+function fixMarkdownLinks() {
+  // 查找所有链接
+  const links = document.querySelectorAll('a[href]');
+  
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+    
+    // 只处理以.md结尾的相对链接
+    if (href && href.endsWith('.md') && !href.startsWith('http')) {
+      let newHref = href.replace('.md', '');
+      
+      // 处理./开头的相对路径
+      if (newHref.startsWith('./')) {
+        newHref = newHref.substring(2);
+      }
+      
+      // 更新链接
+      link.setAttribute('href', newHref);
+      console.log(`Fixed link: ${href} -> ${newHref}`);
+    }
+  });
 }

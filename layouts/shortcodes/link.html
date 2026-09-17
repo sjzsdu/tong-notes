@@ -1,0 +1,15 @@
+{{/*
+  Shortcode to create links with automatic .md removal
+  Usage: {{< link url="path/to/file.md" text="Link Text" >}}
+  Usage: {{< link url="path/to/file.md" >}}Link Text{{< /link >}}
+*/}}
+{{- $url := .Get "url" -}}
+{{- $text := .Get "text" -}}
+{{- if not $text -}}
+  {{- $text = .Inner -}}
+{{- end -}}
+{{- if not $text -}}
+  {{- $text = $url -}}
+{{- end -}}
+
+<a href="{{ partial "helpers/safe-url-md.html" $url }}">{{ $text | safeHTML }}</a>

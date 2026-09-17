@@ -1,0 +1,262 @@
+@startuml Qlib_Data_Module_Architecture
+
+!theme aws-orange
+
+package "qlib.data" {
+    
+    ' 基础抽象层
+    abstract class Expression {
+        +__str__(): str
+        +__repr__(): str
+        +__gt__(other): Expression
+        +__ge__(other): Expression
+        +__lt__(other): Expression
+        +__le__(other): Expression
+    }
+    
+    class ProviderBackendMixin {
+        +get_default_backend(): dict
+        +backend_obj(**kwargs): object
+    }
+    
+    ' Provider抽象基类
+    abstract class BaseProvider {
+        {abstract}
+    }
+    
+    abstract class CalendarProvider extends BaseProvider {
+        +calendar(start_time, end_time, freq, future): list
+        {abstract} +_get_calendar(freq, future): tuple
+    }
+    
+    abstract class InstrumentProvider extends BaseProvider {
+        +list_instruments(market, start_time, end_time, as_list): Union[list, pd.Index]
+        {abstract} +_get_instruments(market): dict
+    }
+    
+    abstract class FeatureProvider extends BaseProvider {
+        +feature(instrument, field, start_time, end_time, freq): pd.DataFrame
+        {abstract} +_get_feature(instrument, field, start_time, end_time, freq): pd.DataFrame
+    }
+    
+    abstract class ExpressionProvider extends BaseProvider {
+        +expression(instrument, field, start_time, end_time, freq): pd.DataFrame
+    }
+    
+    abstract class DatasetProvider extends BaseProvider {
+        +dataset(instruments, fields, start_time, end_time, freq, inst_processors): pd.DataFrame
+    }
+    
+    ' Local Provider实现
+    class LocalProvider extends ProviderBackendMixin {
+        +uri: str
+        +backend: dict
+    }
+    
+    class LocalCalendarProvider extends CalendarProvider, LocalProvider {
+        +calendar(start_time, end_time, freq, future): list
+        +_get_calendar(freq, future): tuple
+    }
+    
+    class LocalInstrumentProvider extends InstrumentProvider, LocalProvider {
+        +list_instruments(market, start_time, end_time, as_list): Union[list, pd.Index]
+        +_get_instruments(market): dict
+    }
+    
+    class LocalFeatureProvider extends FeatureProvider, LocalProvider {
+        +feature(instrument, field, start_time, end_time, freq): pd.DataFrame
+        +_get_feature(instrument, field, start_time, end_time, freq): pd.DataFrame
+    }
+    
+    class LocalExpressionProvider extends ExpressionProvider, LocalProvider {
+        +expression(instrument, field, start_time, end_time, freq): pd.DataFrame
+    }
+    
+    class LocalDatasetProvider extends DatasetProvider, LocalProvider {
+        +dataset(instruments, fields, start_time, end_time, freq, inst_processors): pd.DataFrame
+        +dataset_processor(instruments, fields, start_time, end_time, freq, inst_processors): pd.DataFrame
+    }
+    
+    class LocalPITProvider extends LocalProvider {
+        +period_feature(instrument, field, start_time, end_time): pd.DataFrame
+    }
+    
+    ' Client Provider实现
+    class ClientProvider {
+        +uri: str
+    }
+    
+    class ClientCalendarProvider extends CalendarProvider, ClientProvider {
+        +calendar(start_time, end_time, freq, future): list
+        +_get_calendar(freq, future): tuple
+    }
+    
+    class ClientInstrumentProvider extends InstrumentProvider, ClientProvider {
+        +list_instruments(market, start_time, end_time, as_list): Union[list, pd.Index]
+    }
+    
+    class ClientDatasetProvider extends DatasetProvider, ClientProvider {
+        +dataset(instruments, fields, start_time, end_time, freq, inst_processors): pd.DataFrame
+    }
+    
+}
+
+package "qlib.data.dataset" {
+    
+    ' 数据处理层
+    abstract class DataHandlerABC {
+        +CS_ALL: str = "__all"
+        +CS_RAW: str = "__raw"
+        +DK_R: str = "raw"
+        +DK_I: str = "infer"
+        +DK_L: str = "learn"
+        {abstract} +fetch(selector, level, col_set, data_key): pd.DataFrame
+    }
+    
+    class DataHandler extends DataHandlerABC {
+        +fetch(selector, level, col_set, data_key): pd.DataFrame
+        +get_cols(col_set, data_key): list
+        +get_range_selector(selector, level): slice
+    }
+    
+    class DataHandlerLP extends DataHandler {
+        +learn_processors: list
+        +infer_processors: list
+        +process_data(raw_df, processors, fit_start_time, fit_end_time): pd.DataFrame
+    }
+    
+    ' 数据加载层
+    class DataLoader {
+        +calendar_provider: CalendarProvider
+        +instrument_provider: InstrumentProvider  
+        +feature_provider: FeatureProvider
+        +expression_provider: ExpressionProvider
+        +load(instruments, fields, start_time, end_time, freq, inst_processors): pd.DataFrame
+        +load_group_df(instruments, exprs, names, start_time, end_time, group): pd.DataFrame
+    }
+    
+    ' 数据集层
+    abstract class Dataset {
+        +setup_data(**kwargs): void
+        +config(**kwargs): void
+        {abstract} +prepare(segments, col_set, data_key): pd.DataFrame
+    }
+    
+    class DatasetH extends Dataset {
+        +handler: DataHandler
+        +segments: dict
+        +prepare(segments, col_set, data_key): pd.DataFrame
+        +config(handler_kwargs, segments): void
+    }
+    
+    class TSDatasetH extends DatasetH {
+        +step_len: int
+        +prepare(segments, col_set, data_key): pd.DataFrame
+    }
+    
+}
+
+package "qlib.data.cache" {
+    
+    ' 缓存层
+    abstract class MemCacheUnit {
+        +size_limit: int
+        -_size: int
+        +od: OrderedDict
+        {abstract} +get(key): object
+        {abstract} +set(key, value): void
+    }
+    
+    abstract class ExpressionCache extends MemCacheUnit {
+        {abstract} +get(name, fields, instruments, freq, start_time, end_time): pd.DataFrame
+        {abstract} +set(name, value, fields, instruments, freq, start_time, end_time): void
+    }
+    
+    abstract class DatasetCache extends MemCacheUnit {
+        {abstract} +get(name): object
+        {abstract} +set(name, value): void
+    }
+    
+    class DiskExpressionCache extends ExpressionCache {
+        +cache_dir: str
+        +get(name, fields, instruments, freq, start_time, end_time): pd.DataFrame
+        +set(name, value, fields, instruments, freq, start_time, end_time): void
+    }
+    
+    class DiskDatasetCache extends DatasetCache {
+        +cache_dir: str
+        +get(name): object
+        +set(name, value): void
+    }
+    
+    class SimpleDatasetCache extends DatasetCache {
+        +get(name): object
+        +set(name, value): void
+    }
+    
+    class MemoryCalendarCache extends MemCacheUnit {
+        +get(freq, future): list
+        +set(freq, future, calendar): void
+    }
+    
+}
+
+package "qlib.data.storage" {
+    
+    ' 存储层
+    abstract class CalendarStorage {
+        {abstract} +calendar(freq, future): list
+    }
+    
+    abstract class InstrumentStorage {
+        {abstract} +list_instruments(market, start_time, end_time, as_list): Union[list, pd.Index]
+    }
+    
+    abstract class FeatureStorage {
+        {abstract} +feature(instrument, field, start_time, end_time, freq): pd.DataFrame
+    }
+    
+}
+
+' 数据统一接口
+class D {
+    +calendar_provider: CalendarProvider
+    +instrument_provider: InstrumentProvider
+    +feature_provider: FeatureProvider
+    +expression_provider: ExpressionProvider
+    +dataset_provider: DatasetProvider
+    +calendar(start_time, end_time, freq, future): list
+    +instruments(market, start_time, end_time, as_list): Union[list, pd.Index]
+    +features(instruments, fields, start_time, end_time, freq, disk_cache, inst_processors): pd.DataFrame
+    +dataset(instruments, fields, start_time, end_time, freq, inst_processors): pd.DataFrame
+}
+
+' 组合关系
+D *-- CalendarProvider : uses
+D *-- InstrumentProvider : uses  
+D *-- FeatureProvider : uses
+D *-- ExpressionProvider : uses
+D *-- DatasetProvider : uses
+
+DataHandler *-- DataLoader : uses
+DatasetH *-- DataHandler : uses
+DataLoader *-- CalendarProvider : uses
+DataLoader *-- InstrumentProvider : uses
+DataLoader *-- FeatureProvider : uses
+DataLoader *-- ExpressionProvider : uses
+
+LocalProvider *-- CalendarStorage : backend
+LocalProvider *-- InstrumentStorage : backend
+LocalProvider *-- FeatureStorage : backend
+
+note top of D : 统一数据访问接口\n提供便捷的数据获取方法
+
+note right of LocalProvider : 本地数据提供者\n基于文件系统存储
+
+note left of ClientProvider : 远程数据提供者\n基于网络服务
+
+note bottom of DatasetH : 基于Handler的数据集\n支持复杂数据处理流程
+
+note bottom of ExpressionCache : 表达式缓存系统\n提升计算性能
+
+@enduml

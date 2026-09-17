@@ -68,10 +68,17 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+      hardWraps: false
     parser:
       attribute:
         block: true
         title: true
+      autoHeadingID: true
+    extensions:
+      linkify: true
+      strikethrough: true
+      table: true
+      taskList: true
   # 启用数学公式渲染
   math:
     enable: true

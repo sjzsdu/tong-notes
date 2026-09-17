@@ -320,3 +320,7 @@ html[data-theme='dark'] .post-content::-webkit-scrollbar-thumb {
 html[data-theme='dark'] .post-content::-webkit-scrollbar-thumb:hover {
   background: #666;
 }
+
+.nav-pills {
+  padding-left: 1.5rem !important;
+}

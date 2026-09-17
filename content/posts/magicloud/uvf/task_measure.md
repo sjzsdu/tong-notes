@@ -11,60 +11,68 @@
 ```mermaid
 graph TB
     subgraph "用户界面层 (UI Layer)"
-        A1[测量工具按钮<br/>Measure Tool Button]
-        A2[测量面板<br/>Measurement Panel]
+        A1[Storybook 演示<br/>Storybook Demo]
+        A2[lil-gui 控制面板<br/>Control Panel]
         A3[3D查看器<br/>3D Viewer]
     end
     
-    subgraph "控制器层 (Controller Layer)"
+    subgraph "主控制器 (Main Controller)"
         B1[测量控制器<br/>MeasurementController]
-        B2[交互控制器<br/>InteractionController]
-        B3[几何控制器<br/>GeometryController]
+    end
+    
+    subgraph "管理器层 (Manager Layer)"
+        B2[状态管理器<br/>MeasurementStateManager]
+        B3[交互管理器<br/>MeasurementInteractionManager]
+        B4[渲染管理器<br/>MeasurementRenderingManager]
     end
     
     subgraph "数据模型层 (Model Layer)"
         C1[测量实体<br/>MeasurementEntity]
-        C2[测量状态<br/>MeasurementState]
-        C3[3D点数据<br/>Point3D Data]
+        C2[3D点数据<br/>Point3D]
+        C3[距离数据<br/>DistanceData]
+        C4[样式配置<br/>MeasurementStyle]
     end
     
     subgraph "渲染层 (Rendering Layer)"
-        D1[测量线渲染器<br/>MeasurementLineRenderer]
-        D2[测量文本渲染器<br/>MeasurementTextRenderer]
-        D3[点捕捉渲染器<br/>PointSnapRenderer]
+        D1[测量渲染器<br/>MeasurementRenderer]
+        D2[Three.js 集成<br/>Three.js Integration]
     end
     
     subgraph "服务层 (Service Layer)"
         E1[几何计算服务<br/>GeometryCalculationService]
-        E2[捕捉服务<br/>SnapService]
-        E3[集合服务<br/>CollectionService]
+        E2[捕捉服务<br/>PickupService]
     end
     
     A1 --> B1
     A2 --> B1
-    A3 --> B2
+    A3 --> B1
     
-    B1 --> C1
-    B1 --> C2
-    B2 --> B3
+    B1 --> B2
+    B1 --> B3
+    B1 --> B4
     
-    C1 --> D1
-    C1 --> D2
-    C2 --> D3
+    B2 --> C1
+    B3 --> C1
+    B4 --> D1
+    
+    C1 --> C2
+    C1 --> C3
+    C1 --> C4
+    
+    D1 --> D2
     
     B1 --> E1
-    B2 --> E2
-    C1 --> E3
+    B1 --> E2
     
-    style A1 fill:#e3f2fd
-    style B1 fill:#f1f8e9
+    style B1 fill:#e3f2fd
+    style B2 fill:#f1f8e9
     style C1 fill:#fce4ec
     style D1 fill:#fff3e0
     style E1 fill:#f3e5f5
 ```
 
 **系统架构说明：**
-该架构采用分层设计，将3D距离测量功能分为五个核心层次。用户界面层包含测量工具激活按钮、实时数据显示面板和3D交互查看器。控制器层通过MeasurementController统一管理测量逻辑，与InteractionController和GeometryController协同工作。数据模型层定义了测量实体的数据结构和状态管理。渲染层负责3D场景中的线条、文本和捕捉点的可视化显示。服务层提供核心算法支持，包括几何计算、点捕捉和数据持久化功能。各层间通过信号系统进行响应式通信。
+该架构采用务实的分层设计，以MeasurementController为核心控制器统一协调各个管理器。状态管理器基于Signal响应式系统管理所有测量状态，交互管理器处理鼠标事件和用户操作，渲染管理器负责3D可视化展示。数据模型层定义了完整的测量数据结构，包括测量实体、3D点、距离数据和视觉样式。渲染层通过统一的MeasurementRenderer与Three.js集成。服务层提供几何计算和点捕捉的核心算法支持。整个系统通过Signal响应式架构确保数据变更的自动传播和UI实时同步。
 
 ## 🔄 交互流程设计
 
@@ -74,17 +82,16 @@ graph TB
 stateDiagram-v2
     [*] --> Inactive
     
-    Inactive --> ToolActivated : 点击测量工具
+    Inactive --> ToolActivated : 点击激活测量工具
     ToolActivated --> FirstPointSelection : 进入测量模式
     
     FirstPointSelection --> FirstPointSelected : 点击第一个点
-    FirstPointSelected --> SecondPointTracking : 显示第一点坐标
+    FirstPointSelected --> SecondPointTracking : 显示第一点标记
     
-    SecondPointTracking --> SecondPointSelected : 点击第二个点
-    SecondPointTracking --> FirstPointSelection : 右键取消
+    SecondPointTracking --> MeasurementCompleted : 点击第二个点
+    SecondPointTracking --> FirstPointSelection : 右键取消或重置
     
-    SecondPointSelected --> MeasurementCompleted : 计算并显示距离
-    MeasurementCompleted --> FirstPointSelection : 创建新测量
+    MeasurementCompleted --> FirstPointSelection : 开始新测量
     MeasurementCompleted --> Inactive : 退出工具
     
     state FirstPointSelection {
@@ -94,15 +101,15 @@ stateDiagram-v2
     }
     
     state SecondPointTracking {
-        [*] --> ShowingDistance
-        ShowingDistance --> UpdateDistance : 鼠标移动
-        UpdateDistance --> ShowingDistance : 持续更新
+        [*] --> ShowingPreviewLine
+        ShowingPreviewLine --> UpdatePreviewLine : 鼠标移动(节流)
+        UpdatePreviewLine --> ShowingPreviewLine : 持续更新
     }
     
-    note right of ToolActivated : 激活捕捉功能
-    note right of FirstPointSelected : 面板显示第一点坐标
-    note right of SecondPointTracking : 实时显示距离预览
-    note right of MeasurementCompleted : 保存到实体列表
+    note right of ToolActivated : 激活捕捉功能和交互管理器
+    note right of FirstPointSelected : 创建Point3D对象
+    note right of SecondPointTracking : 实时显示预览线条和距离
+    note right of MeasurementCompleted : 创建MeasurementEntity并渲染
 ```
 
 **交互状态机说明：**
@@ -113,44 +120,45 @@ stateDiagram-v2
 ```mermaid
 sequenceDiagram
     participant User as 用户
-    participant UI as 用户界面
+    participant Story as Storybook演示
     participant MC as 测量控制器
-    participant IC as 交互控制器
+    participant SM as 状态管理器
+    participant IM as 交互管理器
     participant SS as 捕捉服务
-    participant GCS as 几何计算服务
-    participant Renderer as 渲染器
-    participant Panel as 测量面板
+    participant RM as 渲染管理器
+    participant Renderer as 测量渲染器
     
-    User->>UI: 点击测量工具
-    UI->>MC: 激活测量模式
-    MC->>IC: 启用点捕捉
-    IC->>SS: 初始化捕捉服务
+    User->>Story: 点击"Start Tool"按钮
+    Story->>MC: 调用startMeasurement()
+    MC->>SM: 更新isToolActive信号
+    MC->>IM: 启用事件监听
     
-    User->>UI: 鼠标悬停实体
-    UI->>IC: 鼠标事件
-    IC->>SS: 查找捕捉点
-    SS->>Renderer: 显示捕捉预览
+    User->>Story: 鼠标移动到3D模型
+    Story->>IM: 鼠标移动事件
+    IM->>SS: 查找捕捉点
+    SS->>RM: 更新预览状态
+    RM->>Renderer: 渲染捕捉预览
     
-    User->>UI: 点击第一个点
-    UI->>MC: 确认第一点
-    MC->>Panel: 更新第一点坐标
-    MC->>Renderer: 显示第一点标记
+    User->>Story: 点击第一个点
+    Story->>IM: 鼠标点击事件
+    IM->>SM: 设置point1信号
+    SM->>RM: 触发渲染效果
+    RM->>Renderer: 渲染第一点标记
     
-    User->>UI: 移动鼠标
-    UI->>IC: 鼠标移动事件
-    IC->>SS: 跟踪当前位置
-    SS->>GCS: 计算实时距离
-    GCS->>Panel: 更新距离预览
-    GCS->>Renderer: 更新预览线条
+    User->>Story: 移动鼠标(节流处理)
+    Story->>IM: 鼠标移动事件
+    IM->>SM: 更新previewPoint信号
+    SM->>RM: 计算预览距离
+    RM->>Renderer: 更新预览线条
     
-    User->>UI: 点击第二个点
-    UI->>MC: 确认第二点
-    MC->>GCS: 计算最终距离
-    GCS->>Panel: 显示完整数据
-    MC->>Renderer: 渲染最终测量
-    MC->>MC: 保存测量实体
+    User->>Story: 点击第二个点
+    Story->>IM: 鼠标点击事件
+    IM->>MC: 完成测量
+    MC->>MC: 创建MeasurementEntity
+    MC->>SM: 添加到measurements信号
+    SM->>RM: 渲染最终测量
     
-    Note over User, MC: 测量完成，可创建新测量
+    Note over User, Renderer: 测量完成，可在lil-gui中管理
 ```
 
 **数据流转说明：**
@@ -183,7 +191,7 @@ classDiagram
         +z: number
         +entityId?: string
         +surfaceNormal?: Vector3D
-        +snapType: SnapType
+        +PickupType: PickupType
         +distanceTo(other: Point3D): number
         +equals(other: Point3D): boolean
     }
@@ -210,27 +218,30 @@ classDiagram
     }
     
     class MeasurementState {
-        +currentTool: MeasurementTool
-        +activePoint: Point3D | null
-        +previewPoint: Point3D | null
         +measurements: Signal~MeasurementEntity[]~
-        +selectedMeasurement: Signal~MeasurementEntity | null~
         +isToolActive: Signal~boolean~
+        +currentTool: Signal~MeasurementTool | null~
+        +point1: Signal~Point3D | null~
+        +point2: Signal~Point3D | null~
+        +previewPoint: Signal~Point3D | null~
+        +selectedMeasurementId: Signal~string | null~
+        +measurementInProgress: Computed~boolean~
+        +canCompleteMeasurement: Computed~boolean~
     }
     
     MeasurementEntity --> Point3D : contains
     MeasurementEntity --> DistanceData : contains
     MeasurementEntity --> MeasurementStyle : contains
     MeasurementState --> MeasurementEntity : manages
-    Point3D --> SnapType : uses
+    Point3D --> PickupType : uses
     MeasurementState --> MeasurementTool : uses
     
-    <<enumeration>> SnapType
-    SnapType : VERTEX
-    SnapType : EDGE
-    SnapType : FACE
-    SnapType : GRID
-    SnapType : FREE
+    <<enumeration>> PickupType
+    PickupType : VERTEX
+    PickupType : EDGE
+    PickupType : FACE
+    PickupType : GRID
+    PickupType : FREE
 
     <<enumeration>> MeasurementTool
     MeasurementTool : DISTANCE_3D
@@ -293,46 +304,42 @@ graph LR
 
 ```mermaid
 flowchart TD
-    A[测量数据变更<br/>Measurement Data Change] --> B[信号触发<br/>Signal Trigger]
-    B --> C[渲染副作用<br/>Render Effect]
+    A[状态信号变更<br/>State Signal Change] --> B[Effect触发<br/>Effect Trigger]
+    B --> C[渲染管理器<br/>RenderingManager]
     
     C --> D{测量状态<br/>Measurement State}
     
-    D -->|预览模式| E[预览渲染分支<br/>Preview Rendering]
-    D -->|完成模式| F[完成渲染分支<br/>Complete Rendering]
+    D -->|预览模式| E[预览渲染<br/>Preview Rendering]
+    D -->|完成模式| F[完成渲染<br/>Complete Rendering]
     D -->|工具非激活| G[清理渲染<br/>Cleanup Rendering]
     
-    E --> E1[动态线条渲染<br/>Dynamic Line Rendering]
-    E --> E2[实时文本更新<br/>Real-time Text Update]
-    E --> E3[捕捉点高亮<br/>Snap Point Highlight]
+    E --> E1[圆柱体线条<br/>Cylinder Line]
+    E --> E2[球体点标记<br/>Sphere Point Markers]
+    E --> E3[捕捉点预览<br/>Snap Point Preview]
     
-    F --> F1[固定线条渲染<br/>Fixed Line Rendering]
-    F --> F2[最终文本渲染<br/>Final Text Rendering]
-    F --> F3[端点标记渲染<br/>Endpoint Marker Rendering]
+    F --> F1[固定测量线<br/>Fixed Measurement Line]
+    F --> F2[端点标记<br/>Endpoint Markers]
+    F --> F3[距离文本<br/>Distance Text]
     
-    E1 --> H[几何缓冲区更新<br/>Geometry Buffer Update]
-    E2 --> I[材质参数更新<br/>Material Parameter Update]
-    E3 --> J[着色器uniform更新<br/>Shader Uniform Update]
-    
+    E1 --> H[MeasurementRenderer<br/>统一渲染器]
+    E2 --> H
+    E3 --> H
     F1 --> H
-    F2 --> I
-    F3 --> J
+    F2 --> H
+    F3 --> H
     
-    H --> K[Scene Graph更新<br/>Scene Graph Update]
-    I --> K
-    J --> K
+    H --> I[Three.js Scene<br/>场景图更新]
+    I --> J[WebGL渲染<br/>WebGL Rendering]
+    J --> K[Canvas输出<br/>Canvas Output]
     
-    K --> L[GPU渲染指令<br/>GPU Render Commands]
-    L --> M[帧缓冲输出<br/>Frame Buffer Output]
-    
-    G --> N[移除渲染对象<br/>Remove Render Objects]
-    N --> K
+    G --> L[清理3D对象<br/>Cleanup 3D Objects]
+    L --> I
     
     style A fill:#ffeb3b
     style E fill:#4caf50
     style F fill:#2196f3
     style H fill:#ff9800
-    style L fill:#9c27b0
+    style J fill:#9c27b0
 ```
 
 **3D渲染管道说明：**
@@ -342,63 +349,46 @@ flowchart TD
 
 ```mermaid
 classDiagram
-    class MeasurementRenderer {
-        -scene: THREE.Scene
-        -materials: MeasurementMaterials
-        -geometries: MeasurementGeometries
-        +render(measurement: MeasurementEntity): void
-        +updatePreview(point1: Point3D, point2: Point3D): void
+    class MeasurementRenderingManager {
+        -controller: MeasurementController
+        -renderer: MeasurementRenderer
+        +constructor(controller: MeasurementController)
+        +setupRenderingEffects(): void
         +dispose(): void
     }
     
-    class MeasurementLineRenderer {
-        -lineGeometry: THREE.BufferGeometry
-        -lineMaterial: THREE.LineBasicMaterial
-        +updateLine(p1: Point3D, p2: Point3D): void
-        +setStyle(style: MeasurementStyle): void
+    class MeasurementRenderer {
+        -scene: THREE.Scene
+        -currentObjects: THREE.Object3D[]
+        +renderMeasurement(measurement: MeasurementEntity): void
+        +renderPreview(point1: Point3D, previewPoint: Point3D): void
+        +clearScene(): void
+        +dispose(): void
+        -createLine(p1: Point3D, p2: Point3D, style: MeasurementStyle): THREE.Mesh
+        -createPointMarker(point: Point3D, style: MeasurementStyle): THREE.Mesh
+        -createDistanceText(distance: number, midpoint: Vector3): THREE.Mesh
     }
     
-    class MeasurementTextRenderer {
-        -textGeometry: TextGeometry
-        -textMaterial: THREE.MeshStandardMaterial
-        -textMesh: THREE.Mesh
-        +updateText(distance: DistanceData): void
-        +updatePosition(p1: Point3D, p2: Point3D): void
+    class MeasurementController {
+        +renderingManager: MeasurementRenderingManager
+        +stateManager: MeasurementStateManager
+        +container: THREE.Group
+        +updateRendering(): void
     }
     
-    class SnapPointRenderer {
-        -pointGeometry: THREE.SphereGeometry
-        -pointMaterial: THREE.MeshBasicMaterial
-        -pointMesh: THREE.Mesh
-        +showSnapPoint(point: Point3D): void
-        +hideSnapPoint(): void
-        +updateSnapType(type: SnapType): void
+    class MeasurementStateManager {
+        +measurements: Signal~MeasurementEntity[]~
+        +previewPoint: Signal~Point3D | null~
+        +point1: Signal~Point3D | null~
+        +measurementInProgress: Computed~boolean~
     }
     
-    class MeasurementMaterials {
-        +lineMaterial: THREE.LineBasicMaterial
-        +textMaterial: THREE.MeshStandardMaterial
-        +pointMaterial: THREE.MeshBasicMaterial
-        +previewMaterial: THREE.LineDashedMaterial
-        +updateColors(style: MeasurementStyle): void
-    }
+    MeasurementController --> MeasurementRenderingManager : creates
+    MeasurementRenderingManager --> MeasurementRenderer : uses
+    MeasurementRenderingManager --> MeasurementStateManager : observes
+    MeasurementRenderer --> THREE : uses
     
-    class MeasurementGeometries {
-        +lineGeometry: THREE.BufferGeometry
-        +textGeometry: TextGeometry
-        +pointGeometry: THREE.SphereGeometry
-        +updateLineGeometry(p1: Point3D, p2: Point3D): void
-    }
-    
-    MeasurementRenderer --> MeasurementLineRenderer : uses
-    MeasurementRenderer --> MeasurementTextRenderer : uses
-    MeasurementRenderer --> SnapPointRenderer : uses
-    MeasurementRenderer --> MeasurementMaterials : uses
-    MeasurementRenderer --> MeasurementGeometries : uses
-    
-    MeasurementLineRenderer --> MeasurementMaterials : uses
-    MeasurementTextRenderer --> MeasurementMaterials : uses
-    SnapPointRenderer --> MeasurementMaterials : uses
+    note for MeasurementRenderer "使用CylinderGeometry创建粗线条\n使用SphereGeometry创建点标记\n使用MeshBasicMaterial进行渲染"
 ```
 
 **渲染组件架构说明：**
@@ -511,104 +501,92 @@ graph TB
 
 ## 🖥️ 用户界面设计
 
-### 测量面板组件
+### 用户界面实现
 
 ```mermaid
 flowchart TD
-    A[测量面板<br/>Measurement Panel] --> B[面板头部<br/>Panel Header]
-    A --> C[坐标显示区<br/>Coordinates Section]
-    A --> D[距离显示区<br/>Distance Section]
-    A --> E[控制按钮区<br/>Control Buttons]
+    A[Storybook 演示界面<br/>Storybook Demo] --> B[lil-gui 控制面板<br/>Control Panel]
+    A --> C[3D 查看器<br/>3D Viewer Canvas]
     
-    B --> B1[工具标题<br/>3D Distance Measurement]
-    B --> B2[状态指示器<br/>Status Indicator]
-    B --> B3[关闭按钮<br/>Close Button]
+    B --> B1[工具控制<br/>Tool Controls]
+    B --> B2[测量列表<br/>Measurements List]
+    B --> B3[样式设置<br/>Style Settings]
     
-    C --> C1[第一点坐标<br/>Point 1: X, Y, Z]
-    C --> C2[第二点坐标<br/>Point 2: X, Y, Z]
-    C --> C3[坐标单位<br/>Unit Display]
+    B1 --> B11[Start Tool<br/>启动工具按钮]
+    B1 --> B12[Stop Tool<br/>停止工具按钮]
+    B1 --> B13[Clear All<br/>清空所有按钮]
     
-    D --> D1[X轴距离<br/>ΔX Distance]
-    D --> D2[Y轴距离<br/>ΔY Distance]
-    D --> D3[Z轴距离<br/>ΔZ Distance]
-    D --> D4[3D直线距离<br/>3D Linear Distance]
-    D --> D5[平面距离<br/>Planar Distances]
+    B2 --> B21[测量项显示<br/>Measurement Items]
+    B2 --> B22[显隐控制<br/>Visibility Toggle]
+    B2 --> B23[删除按钮<br/>Delete Button]
     
-    E --> E1[重置按钮<br/>Reset Button]
-    E --> E2[复制按钮<br/>Copy Button]
-    E --> E3[保存按钮<br/>Save Button]
-    E --> E4[新建测量<br/>New Measurement]
+    B3 --> B31[线条颜色<br/>Line Color]
+    B3 --> B32[线条宽度<br/>Line Width]
+    B3 --> B33[点标记大小<br/>Point Size]
+    
+    C --> C1[3D模型显示<br/>3D Model Display]
+    C --> C2[测量线条渲染<br/>Measurement Lines]
+    C --> C3[点标记渲染<br/>Point Markers]
+    C --> C4[预览线条<br/>Preview Lines]
     
     style A fill:#e3f2fd
-    style C fill:#f1f8e9
-    style D fill:#fff3e0
-    style E fill:#fce4ec
+    style B1 fill:#f1f8e9
+    style B2 fill:#fff3e0
+    style C fill:#fce4ec
 ```
 
-**测量面板组件说明：**
-测量面板采用分区设计，提供清晰的信息层次结构。面板头部包含工具标题、当前状态指示器（显示"选择第一点"、"选择第二点"、"测量完成"等状态）和关闭按钮。坐标显示区实时显示两个测量点的精确3D坐标，包含单位信息和数值精度控制。距离显示区展示完整的距离分析数据，包括各坐标轴分量和3D直线距离，以及XY、XZ、YZ三个平面的投影距离。控制按钮区提供测量操作功能：重置清空当前测量、复制将数据复制到剪贴板、保存将测量添加到实体列表、新建开始下一个测量。所有数值显示都是只读的，确保数据完整性。
+**用户界面实现说明：**
+当前实现采用Storybook作为演示平台，集成了lil-gui作为控制面板，提供直观的工具操作界面。控制面板分为三个主要区域：工具控制区提供启动/停止测量工具和清空所有测量的功能；测量列表区显示已完成的测量项，支持单个测量的显隐控制和删除操作；样式设置区允许用户自定义测量线条的颜色、宽度和点标记大小。3D查看器负责显示模型和测量结果，包括实时预览线条、最终测量线条和端点标记。整个界面响应式设计，通过Signal系统确保用户操作与3D显示的实时同步。
 
-### 实体管理界面
+### 实体管理实现
 
 ```mermaid
 graph LR
-    subgraph "实体列表 (Entity List)"
-        A1[测量实体项<br/>Measurement Item 1]
-        A2[测量实体项<br/>Measurement Item 2]
-        A3[测量实体项<br/>Measurement Item 3]
+    subgraph "lil-gui 测量面板 (Measurements Panel)"
+        A1[测量项 1<br/>Measurement_001: 15.23]
+        A2[测量项 2<br/>Measurement_002: 28.47]
+        A3[测量项 3<br/>Measurement_003: 9.85]
     end
     
-    subgraph "实体项详情 (Item Details)"
-        B1[实体名称<br/>Entity Name]
-        B2[测量数据<br/>Measurement Data]
-        B3[创建时间<br/>Created Time]
-        B4[可见性状态<br/>Visibility Status]
+    subgraph "测量项控制 (Item Controls)"
+        B1[visible 复选框<br/>Visibility Checkbox]
+        B2[Delete 按钮<br/>Delete Button]
     end
     
-    subgraph "操作按钮 (Action Buttons)"
-        C1[显示/隐藏<br/>Show/Hide Toggle]
-        C2[重命名<br/>Rename]
-        C3[复制数据<br/>Copy Data]
-        C4[删除<br/>Delete]
-        C5[定位<br/>Focus View]
+    subgraph "全局控制 (Global Controls)"
+        C1[Clear All<br/>清空全部按钮]
+        C2[Export JSON<br/>导出JSON按钮]
+        C3[Import JSON<br/>导入JSON按钮]
     end
     
-    subgraph "批量操作 (Batch Operations)"
-        D1[全选/取消<br/>Select All/None]
-        D2[批量显示<br/>Batch Show]
-        D3[批量隐藏<br/>Batch Hide]
-        D4[批量删除<br/>Batch Delete]
-        D5[导出数据<br/>Export Data]
+    subgraph "数据持久化 (Data Persistence)"
+        D1[MeasurementEntity[]<br/>测量实体数组]
+        D2[JSON序列化<br/>JSON Serialization]
+        D3[localStorage存储<br/>Local Storage]
     end
     
     A1 --> B1
     A1 --> B2
-    A1 --> B3
-    A1 --> B4
+    A2 --> B1
+    A2 --> B2
+    A3 --> B1
+    A3 --> B2
     
-    B1 --> C1
-    B2 --> C2
-    B3 --> C3
-    B4 --> C4
-    B1 --> C5
-    
-    A1 --> D1
-    A2 --> D1
-    A3 --> D1
+    C1 --> D1
+    C2 --> D2
+    C3 --> D2
     
     D1 --> D2
-    D1 --> D3
-    D1 --> D4
-    D1 --> D5
+    D2 --> D3
     
     style A1 fill:#e8f5e8
-    style B2 fill:#e3f2fd
+    style B1 fill:#e3f2fd
     style C1 fill:#fff3e0
-    style D5 fill:#fce4ec
+    style D2 fill:#fce4ec
 ```
 
-**实体管理界面说明：**
-实体管理界面为用户提供完整的测量结果管理功能。每个测量实体项显示实体名称、关键测量数据（如3D距离）、创建时间和当前可见性状态。单个实体的操作包括显示/隐藏切换、重命名、数据复制、删除和视图定位功能。批量操作支持多选模式，用户可以同时管理多个测量实体：全选或取消选择、批量显示或隐藏、批量删除和数据导出功能。界面设计注重用户体验，提供清晰的视觉反馈和直观的操作流程，支持View模式和Draft模式下的一致性操作体验。
+**实体管理实现说明：**
+当前实现通过lil-gui提供简洁而实用的测量实体管理功能。每个测量项以"名称: 距离值"的格式在面板中显示，配备可见性复选框和删除按钮进行单项管理。全局控制区提供清空全部测量、导出JSON和导入JSON的批量操作功能。数据持久化通过MeasurementEntity的JSON序列化实现，支持本地存储和数据交换。这种实现方式虽然界面相对简单，但功能完整，满足了测量结果的基本管理需求，同时保持了良好的用户体验和响应性。
 
 ## 🔄 状态管理集成
 
@@ -617,58 +595,53 @@ graph LR
 ```mermaid
 flowchart LR
     subgraph "用户操作 (User Actions)"
-        U1[激活工具<br/>Activate Tool]
+        U1[启动工具<br/>Start Tool]
         U2[点击第一点<br/>Click Point 1]
         U3[移动鼠标<br/>Mouse Move]
         U4[点击第二点<br/>Click Point 2]
-        U5[重置测量<br/>Reset]
+        U5[停止工具<br/>Stop Tool]
     end
     
-    subgraph "状态信号 (State Signals)"
-        S1[toolActive<br/>Signal of boolean]
-        S2[point1<br/>Signal of Point3D or null]
-        S3[previewPoint<br/>Signal of Point3D or null]
-        S4[point2<br/>Signal of Point3D or null]
-        S5[measurementComplete<br/>Signal of boolean]
+    subgraph "基础信号 (Base Signals)"
+        S1[isToolActive<br/>Signal~boolean~]
+        S2[point1<br/>Signal~Point3D | null~]
+        S3[previewPoint<br/>Signal~Point3D | null~]
+        S4[point2<br/>Signal~Point3D | null~]
+        S5[measurements<br/>Signal~MeasurementEntity[]~]
     end
     
     subgraph "计算信号 (Computed Signals)"
-        C1[panelData<br/>Computed of PanelData]
-        C2[previewDistance<br/>Computed of number]
-        C3[renderObjects<br/>Computed of RenderObject array]
-        C4[canComplete<br/>Computed of boolean]
+        C1[measurementInProgress<br/>Computed~boolean~]
+        C2[canCompleteMeasurement<br/>Computed~boolean~]
+        C3[hasFirstPoint<br/>Computed~boolean~]
+        C4[selectedMeasurement<br/>Computed~MeasurementEntity | null~]
     end
     
     subgraph "副作用 (Effects)"
-        E1[更新面板<br/>Update Panel]
-        E2[渲染3D<br/>Render 3D]
-        E3[保存数据<br/>Save Data]
-        E4[清理状态<br/>Cleanup State]
+        E1[渲染管理器效果<br/>Rendering Manager Effect]
+        E2[lil-gui更新<br/>GUI Update Effect]
+        E3[交互状态更新<br/>Interaction State Effect]
+        E4[容器管理<br/>Container Management]
     end
     
     U1 --> S1
     U2 --> S2
     U3 --> S3
     U4 --> S4
+    U4 --> S5
     U5 --> S1
-    U5 --> S2
-    U5 --> S4
     
     S1 --> C1
-    S1 --> C3
     S2 --> C1
-    S2 --> C2
     S2 --> C3
+    S4 --> C2
     S3 --> C2
-    S3 --> C3
-    S4 --> C1
-    S4 --> C4
     S5 --> C4
     
     C1 --> E1
     C2 --> E1
-    C3 --> E2
-    C4 --> E3
+    S5 --> E2
+    S1 --> E3
     S1 --> E4
     
     style U1 fill:#ffeb3b
@@ -682,41 +655,39 @@ flowchart LR
 
 ## 📦 实施计划
 
-### 开发阶段规划
+### 实际开发历程
 
 ```mermaid
 gantt
-    title 3D距离测量工具开发计划
+    title 3D距离测量工具实际开发历程
     dateFormat  YYYY-MM-DD
     section 第一阶段：基础架构
-    数据模型设计           :done, phase1-1, 2025-10-15, 3d
-    信号系统集成           :done, phase1-2, after phase1-1, 2d
-    基础控制器实现         :active, phase1-3, after phase1-2, 4d
-    几何计算服务           : phase1-4, after phase1-3, 3d
+    数据模型设计           :done, phase1-1, 2025-10-15, 1d
+    信号系统集成           :done, phase1-2, 2025-10-16, 2d
+    主控制器实现           :done, phase1-3, 2025-10-18, 2d
+    几何计算服务           :done, phase1-4, 2025-10-19, 1d
     
     section 第二阶段：交互功能
-    点捕捉服务实现         : phase2-1, after phase1-4, 5d
-    交互状态机             : phase2-2, after phase2-1, 3d
-    用户界面组件           : phase2-3, after phase2-2, 4d
-    测量面板实现           : phase2-4, after phase2-3, 3d
+    点捕捉服务实现         :done, phase2-1, 2025-10-19, 2d
+    交互管理器实现         :done, phase2-2, 2025-10-20, 1d
+    鼠标事件处理           :done, phase2-3, 2025-10-20, 1d
     
     section 第三阶段：渲染系统
-    3D渲染器开发           : phase3-1, after phase2-4, 6d
-    线条和文本渲染         : phase3-2, after phase3-1, 4d
-    捕捉点可视化           : phase3-3, after phase3-2, 2d
-    样式系统实现           : phase3-4, after phase3-3, 3d
+    渲染管理器开发         :done, phase3-1, 2025-10-20, 2d
+    3D线条和点渲染         :done, phase3-2, 2025-10-20, 2d
+    预览系统实现           :done, phase3-3, 2025-10-20, 1d
     
-    section 第四阶段：实体管理
-    实体存储系统           : phase4-1, after phase3-4, 3d
-    实体列表界面           : phase4-2, after phase4-1, 4d
-    批量操作功能           : phase4-3, after phase4-2, 3d
-    数据导入导出           : phase4-4, after phase4-3, 2d
+    section 第四阶段：用户界面
+    Storybook集成          :done, phase4-1, 2025-10-20, 1d
+    lil-gui控制面板        :done, phase4-2, 2025-10-20, 2d
+    实体管理界面           :done, phase4-3, 2025-10-20, 1d
+    数据导入导出           :done, phase4-4, 2025-10-20, 1d
     
-    section 第五阶段：测试与优化
-    单元测试编写           : phase5-1, after phase4-4, 5d
-    集成测试实施           : phase5-2, after phase5-1, 3d
-    性能优化调整           : phase5-3, after phase5-2, 4d
-    用户体验优化           : phase5-4, after phase5-3, 3d
+    section 第五阶段：优化完善
+    性能优化(鼠标节流)     :done, phase5-1, 2025-10-20, 1d
+    视觉效果优化           :done, phase5-2, 2025-10-20, 1d
+    英文国际化             :done, phase5-3, 2025-10-20, 1d
+    错误修复和完善         :done, phase5-4, 2025-10-20, 1d
 ```
 
 ### 技术风险评估
@@ -747,24 +718,32 @@ quadrantChart
 
 **技术风险评估**识别了关键风险点：点捕捉精度和内存泄漏为高概率风险，需要重点关注；3D渲染性能和数据一致性为高影响风险，需要充分测试；并发状态管理为中等风险，需要制定应对策略。
 
-## 🎯 总结
+## 🎯 实现总结
 
-本设计文档为UVF框架中的3D距离测量工具提供了完整的技术实施方案。设计充分利用了框架的响应式架构、模块化设计和Three.js渲染能力，确保功能的高质量实现和良好的用户体验。
+本文档记录了UVF框架中3D距离测量工具的完整实施过程和最终架构。该实现充分利用了框架的响应式架构、模块化设计和Three.js渲染能力，在保持代码简洁的同时实现了完整的测量功能。
 
-### 核心优势
+### 实现亮点
 
-- **响应式架构集成**：深度集成信号系统，确保状态同步和UI响应性
-- **模块化设计**：清晰的职责分离，便于维护和扩展
-- **专业3D渲染**：基于Three.js的高质量可视化展示
-- **完善的交互体验**：直观的点捕捉和实时预览功能
-- **数据管理完整**：支持测量结果的完整生命周期管理
+- **务实的架构设计**：采用4层架构，平衡了复杂度和功能完整性
+- **响应式状态管理**：基于Signal系统的完整状态同步机制
+- **高质量3D渲染**：使用CylinderGeometry和SphereGeometry实现优雅的可视化
+- **完整的交互体验**：支持多种捕捉模式和实时预览反馈
+- **实用的管理界面**：通过lil-gui提供直观的控制和管理功能
 
-### 技术特色
+### 技术实现特色
 
-- **精确的几何计算**：多维度距离分析和坐标系支持
-- **智能点捕捉**：多策略捕捉系统，提供精确的点选择
-- **实时渲染反馈**：动态预览和即时视觉反馈
-- **状态管理一致性**：基于Signal系统的可靠状态同步
-- **扩展性设计**：为未来功能扩展预留充足接口
+- **精确的几何计算**：完整的3D距离分析和多维度数据展示
+- **智能点捕捉系统**：支持顶点、边缘、面和自由点捕捉
+- **性能优化处理**：鼠标移动节流机制确保流畅的用户体验
+- **数据持久化支持**：JSON序列化实现测量结果的保存和加载
+- **国际化支持**：英文界面适应国际化需求
 
-这个设计方案为开发团队提供了清晰的实施路径，确保3D距离测量工具能够无缝集成到UVF框架中，为用户提供专业级的空间分析能力。
+### 实际应用价值
+
+- **快速集成**：模块化设计使得工具可以轻松集成到现有项目中
+- **用户友好**：直观的Storybook演示和lil-gui控制界面
+- **功能完整**：从基础测量到高级管理的完整功能链
+- **扩展性强**：为未来功能扩展预留了良好的架构基础
+- **维护性好**：清晰的代码结构和完善的类型定义
+
+这个实现方案成功地在理论设计和实际需求之间找到了平衡点，既满足了当前的功能要求，又为未来的扩展和优化奠定了坚实的基础。

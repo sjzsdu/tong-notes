@@ -1,0 +1,17 @@
+{{/*
+  Custom safeURL function that removes .md extensions from links
+  Usage: {{ partial "helpers/safe-url-md.html" "path/to/file.md" }}
+*/}}
+{{- $url := . -}}
+
+{{- /* 处理.md文件链接 */ -}}
+{{- if and (strings.HasSuffix $url ".md") (not (strings.HasPrefix $url "http")) -}}
+  {{- $url = strings.TrimSuffix $url ".md" -}}
+  {{- /* 处理./相对路径 */ -}}
+  {{- if strings.HasPrefix $url "./" -}}
+    {{- $url = strings.TrimPrefix $url "./" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* 应用原始的safeURL处理 */ -}}
+{{- $url | safeURL -}}
